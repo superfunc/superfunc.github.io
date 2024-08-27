@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C on ideas on programming</title>
+    <link>http://localhost:1313/tags/c/</link>
+    <description>Recent content in C on ideas on programming</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 25 Aug 2024 17:06:11 -0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/c/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>001: Contiguous Memory</title>
+      <link>http://localhost:1313/perf/001/</link>
+      <pubDate>Sun, 25 Aug 2024 17:06:11 -0700</pubDate>
+      <guid>http://localhost:1313/perf/001/</guid>
+      <description>001: Contiguous Memory Motivation Default behaviors, both in systems as well as in people, are incredibly important. The data structures we use day in and day out have a huge impact on performance. While things like asymptotic complexity do have value, I believe the current calculus employed by the average programmer is a bit skewed in the wrong direction. Particularly, I think they are considering things like asymptotic complexity before considering the memory layout of a particular data structure.</description>
+    </item>
+  </channel>
+</rss>
