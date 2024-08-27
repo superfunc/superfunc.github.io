@@ -2,24 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/perf/001/</loc>
-    <lastmod>2024-08-25T17:06:11-07:00</lastmod>
+    <loc>https://superfunc.github.io/about/</loc>
   </url><url>
-    <loc>http://localhost:1313/tags/c/</loc>
-    <lastmod>2024-08-25T17:06:11-07:00</lastmod>
+    <loc>https://superfunc.github.io/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/</loc>
-    <lastmod>2024-08-25T17:06:11-07:00</lastmod>
+    <loc>https://superfunc.github.io/</loc>
   </url><url>
-    <loc>http://localhost:1313/tags/perf/</loc>
-    <lastmod>2024-08-25T17:06:11-07:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/perf/</loc>
-    <lastmod>2024-08-25T17:06:11-07:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2024-08-25T17:06:11-07:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://superfunc.github.io/tags/</loc>
   </url>
 </urlset>
