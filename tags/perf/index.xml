@@ -10,11 +10,18 @@
     <lastBuildDate>Sun, 25 Aug 2024 17:06:11 -0700</lastBuildDate>
     <atom:link href="https://superfunc.github.io/tags/perf/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>000: Speeding Up C Builds on Unix-ish Machines</title>
+      <link>https://superfunc.github.io/perf/000/</link>
+      <pubDate>Sun, 25 Aug 2024 17:06:11 -0700</pubDate>
+      <guid>https://superfunc.github.io/perf/000/</guid>
+      <description>Speeding Up C Builds on Unix-ish Machines Introduction ¬ Build times should be fast. Live in C++land for long enough and you might forget this, but just look at languages that have prioritized compiler performance, and its clearly viable. Go, Jai and Nim are a couple examples that come to mind. Nim is particularly interesting here because its literally generating C code, giving it to a C compiler and letting it generate the binary.</description>
+    </item>
+    <item>
       <title>001: Contiguous Memory</title>
       <link>https://superfunc.github.io/perf/001/</link>
       <pubDate>Sun, 25 Aug 2024 17:06:11 -0700</pubDate>
       <guid>https://superfunc.github.io/perf/001/</guid>
-      <description>DRAFT&#xA;001: Contiguous Memory Motivation Default behaviors, both in systems as well as in people, are incredibly important. The data structures we use day in and day out have a huge impact on performance. While things like asymptotic complexity do have value, I believe the current calculus employed by the average programmer is a bit skewed in the wrong direction. Particularly, I think they are considering things like asymptotic complexity before considering the memory layout of a particular data structure.</description>
+      <description>001: Contiguous Memory Motivation Default behaviors, both in systems as well as in people, are incredibly important. The data structures we use day in and day out have a huge impact on performance. While things like asymptotic complexity do have value, I believe the current calculus employed by the average programmer is a bit skewed in the wrong direction. Particularly, I think they are considering things like asymptotic complexity before considering the memory layout of a particular data structure.</description>
     </item>
   </channel>
 </rss>
