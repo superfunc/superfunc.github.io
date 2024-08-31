@@ -1,40 +1,39 @@
 <!DOCTYPE html>
 <html lang="en-us">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=62040&amp;path=livereload" data-no-instant defer></script>
+<head>
   <link rel="preload" href="/lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" href="/lib/font-awesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" href="/lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-  <link rel="preload" href="/lib/JetBrainsMono/web/woff2/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/bk/bk.woff" as="font" type="font/woff" crossorigin="anonymous">
+
   
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title> 001: Contiguous Memory | ideas on programming</title>
-  <link rel = 'canonical' href = 'http://localhost:62040/perf/001/'>
+  <link rel = 'canonical' href = 'https://superfunc.github.io/perf/001/'>
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
-  <meta property="og:url" content="http://localhost:62040/perf/001/">
-  <meta property="og:site_name" content="ideas on programming">
-  <meta property="og:title" content="001: Contiguous Memory">
-  <meta property="og:description" content="001: Contiguous Memory Motivation Default behaviors, both in systems as well as in people, are incredibly important. The data structures we use day in and day out have a huge impact on performance. While things like asymptotic complexity do have value, I believe the current calculus employed by the average programmer is a bit skewed in the wrong direction. Particularly, I think they are considering things like asymptotic complexity before considering the memory layout of a particular data structure.">
-  <meta property="og:locale" content="en_us">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="perf">
-    <meta property="article:published_time" content="2024-08-25T17:06:11-07:00">
-    <meta property="article:modified_time" content="2024-08-25T17:06:11-07:00">
-    <meta property="article:tag" content="Perf">
-    <meta property="article:tag" content="C">
+  <meta property="og:title" content="001: Contiguous Memory" />
+<meta property="og:description" content="DRAFT
+001: Contiguous Memory Motivation Default behaviors, both in systems as well as in people, are incredibly important. The data structures we use day in and day out have a huge impact on performance. While things like asymptotic complexity do have value, I believe the current calculus employed by the average programmer is a bit skewed in the wrong direction. Particularly, I think they are considering things like asymptotic complexity before considering the memory layout of a particular data structure." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://superfunc.github.io/perf/001/" /><meta property="article:section" content="perf" />
+<meta property="article:published_time" content="2024-08-25T17:06:11-07:00" />
+<meta property="article:modified_time" content="2024-08-25T17:06:11-07:00" />
 
-  
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="001: Contiguous Memory">
-  <meta name="twitter:description" content="001: Contiguous Memory Motivation Default behaviors, both in systems as well as in people, are incredibly important. The data structures we use day in and day out have a huge impact on performance. While things like asymptotic complexity do have value, I believe the current calculus employed by the average programmer is a bit skewed in the wrong direction. Particularly, I think they are considering things like asymptotic complexity before considering the memory layout of a particular data structure.">
+
+  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="001: Contiguous Memory"/>
+<meta name="twitter:description" content="DRAFT
+001: Contiguous Memory Motivation Default behaviors, both in systems as well as in people, are incredibly important. The data structures we use day in and day out have a huge impact on performance. While things like asymptotic complexity do have value, I believe the current calculus employed by the average programmer is a bit skewed in the wrong direction. Particularly, I think they are considering things like asymptotic complexity before considering the memory layout of a particular data structure."/>
 
   
   
+    
   
-  <link rel="stylesheet" href="http://localhost:62040/css/styles.baa7bee2428cd328be3f7dfc4a5eb1cfd3bb845a4a3ad7861b401705a30c40e88e8d5ff95783c039f995b49b1386a56c0e0ba92825e1e2645e5f4831e86df0b9.css" integrity="sha512-uqe&#43;4kKM0yi&#43;P338Sl6xz9O7hFpKOteGG0AXBaMMQOiOjV/5V4PAOfmVtJsThqVsDgupKCXh4mReX0gx6G3wuQ=="> 
+  
+  <link rel="stylesheet" href="https://superfunc.github.io/css/styles.d09ce2650f6513617a985516d2b66b40d4047947ed5658e0db550967477a163353f662251e14c6a9a25b93ede7c44052b00c5edd89afe888af7af3c4b83227bb.css" integrity="sha512-0JziZQ9lE2F6mFUW0rZrQNQEeUftVljg21UJZ0d6FjNT9mIlHhTGqaJbk&#43;3nxEBSsAxe3Ymv6IivevPEuDInuw=="> 
 
   
   
@@ -46,8 +45,9 @@
   
 
   
-<link rel="icon" type="image/png" href="http://localhost:62040/images/favicon.ico" />
+<link rel="icon" type="image/png" href="https://superfunc.github.io/images/favicon.ico" />
 
+  
   
   
   
@@ -57,9 +57,9 @@
   <div class="content index py4">
 
     <header id="header">
-  <a href="http://localhost:62040/">
+  <a href="https://superfunc.github.io/">
   
-    <div id="logo" style="background-image: url(http://localhost:62040/images/logo.png)"></div>
+    <div id="logo" style="background-image: url(https://superfunc.github.io/images/logo.png)"></div>
   
   <div id="title">
     <h1>ideas on programming</h1>
@@ -71,9 +71,16 @@
         <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x" aria-hidden="true"></i></a>
       </li>
       
+        <li><a href="/">index</a></li>
+      
+        <li><a href="/tags">tags</a></li>
+      
+        <li><a href="/about">about</a></li>
+      
     </ul>
   </div>
 </header>
+
 
 
 
@@ -82,14 +89,17 @@
 
   <div class="content" itemprop="articleBody">
   
-    <h1 id="001-contiguous-memory">001: Contiguous Memory</h1>
-<h3 id="motivation">Motivation</h3>
+    <blockquote>
+<p>DRAFT</p>
+</blockquote>
+<h1 id="001-contiguous-memory">001: Contiguous Memory</h1>
+<h2 id="motivation">Motivation</h2>
 <p>Default behaviors, both in systems as well as in people, are incredibly
 important. The data structures we use day in and day out have a huge impact
-on performance. While things like asymptotic complexity <em>do</em> have value,
+on performance. While things like asymptotic complexity do have value,
 I believe the current calculus employed by the average programmer is a bit
 skewed in the wrong direction. Particularly, I think they are considering
-things like asymptotic complexity <em>before</em> considering the memory layout of
+things like asymptotic complexity before considering the memory layout of
 a particular data structure. For the vast majority of situations, this
 is the wrong approach.</p>
 <p>The rate of increasing speed for processors has dwarfed that of their
@@ -110,78 +120,78 @@ apple silicon). Because of this when you fetch something from a non-contiguous
 data structure, like a linked list, you are essentially wasting the remainder
 of that cacheline being pulled along for the ride. With an array, its all able
 to be immediately utilized by the CPU.</p>
-<h3 id="initial-numbers">Initial numbers</h3>
+<h2 id="initial-numbers">Initial Numbers</h2>
 <p>To demonstrate this, lets whip up a quick benchmark, simply iterating through
 a set of data, stored in a vector, and a linked list. We&rsquo;ll use google&rsquo;s excellent
 <a href="https://github.com/google/benchmark">benchmark library</a> to get some reasonably
 statistical results. (While I&rsquo;m not a fan of the STL, we use it for readers'
 familiarity &amp; comfort below).</p>
-<div class="highlight"><pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C++" data-lang="C++"><span style="display:flex;"><span><span style="color:#78787e">#include</span> <span style="color:#78787e">&#34;benchmark/benchmark.h&#34;</span><span style="color:#78787e">
-</span></span></span><span style="display:flex;"><span><span style="color:#78787e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#78787e">#include</span> <span style="color:#78787e">&lt;forward_list&gt;</span><span style="color:#78787e">
-</span></span></span><span style="display:flex;"><span><span style="color:#78787e">#include</span> <span style="color:#78787e">&lt;vector&gt;</span><span style="color:#78787e">
-</span></span></span><span style="display:flex;"><span><span style="color:#78787e">#include</span> <span style="color:#78787e">&lt;cstdint&gt;</span><span style="color:#78787e">
-</span></span></span><span style="display:flex;"><span><span style="color:#78787e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#78787e">#define BENCH_SIZE 1&#39;000&#39;000
-</span></span></span><span style="display:flex;"><span><span style="color:#78787e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#ff6ac1">static</span> <span style="color:#9aedfe">void</span> <span style="color:#57c7ff">BM_Iterate_Array</span>(benchmark<span style="color:#ff6ac1">::</span>State<span style="color:#ff6ac1">&amp;</span> state) {
-</span></span><span style="display:flex;"><span>  <span style="color:#78787e">// set up code, not benchmarked
-</span></span></span><span style="display:flex;"><span><span style="color:#78787e"></span>  std<span style="color:#ff6ac1">::</span>vector<span style="color:#ff6ac1">&lt;</span><span style="color:#9aedfe">int32_t</span><span style="color:#ff6ac1">&gt;</span> v;
-</span></span><span style="display:flex;"><span>  v.reserve(BENCH_SIZE);
-</span></span><span style="display:flex;"><span>  <span style="color:#ff6ac1">for</span> (<span style="color:#9aedfe">int</span> i <span style="color:#ff6ac1">=</span> <span style="color:#ff9f43">0</span>; i <span style="color:#ff6ac1">&lt;</span> BENCH_SIZE; i<span style="color:#ff6ac1">++</span>) {
-</span></span><span style="display:flex;"><span>    v.push_back(i <span style="color:#ff6ac1">%</span> <span style="color:#ff9f43">13</span>);
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#78787e">// the actual portion being benchmarked
-</span></span></span><span style="display:flex;"><span><span style="color:#78787e"></span>  <span style="color:#ff6ac1">for</span> (<span style="color:#ff6ac1">auto</span> <span style="color:#ff5c57">_</span> : state) {
-</span></span><span style="display:flex;"><span>    <span style="color:#9aedfe">int32_t</span> sum <span style="color:#ff6ac1">=</span> <span style="color:#ff9f43">0</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#ff6ac1">for</span> (<span style="color:#ff6ac1">const</span> <span style="color:#ff6ac1">auto</span><span style="color:#ff6ac1">&amp;</span> <span style="color:#ff5c57">item</span> : v) {
-</span></span><span style="display:flex;"><span>      sum <span style="color:#ff6ac1">+=</span> item;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#78787e">// preventing the optimizer from just deleting our code
-</span></span></span><span style="display:flex;"><span><span style="color:#78787e"></span>    <span style="color:#78787e">// since it doesnt get used anywhere else.
-</span></span></span><span style="display:flex;"><span><span style="color:#78787e"></span>    benchmark<span style="color:#ff6ac1">::</span>DoNotOptimize(v);
-</span></span><span style="display:flex;"><span>    benchmark<span style="color:#ff6ac1">::</span>DoNotOptimize(sum);
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>BENCHMARK(BM_Iterate_Array);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ff6ac1">static</span> <span style="color:#9aedfe">void</span> <span style="color:#57c7ff">BM_Iterate_List</span>(benchmark<span style="color:#ff6ac1">::</span>State<span style="color:#ff6ac1">&amp;</span> state) {
-</span></span><span style="display:flex;"><span>  std<span style="color:#ff6ac1">::</span>forward_list<span style="color:#ff6ac1">&lt;</span><span style="color:#9aedfe">int32_t</span><span style="color:#ff6ac1">&gt;</span> l;
-</span></span><span style="display:flex;"><span>  <span style="color:#ff6ac1">for</span> (<span style="color:#9aedfe">int</span> i <span style="color:#ff6ac1">=</span> <span style="color:#ff9f43">0</span>; i <span style="color:#ff6ac1">&lt;</span> BENCH_SIZE; i<span style="color:#ff6ac1">++</span>) {
-</span></span><span style="display:flex;"><span>    l.push_front(i <span style="color:#ff6ac1">%</span> <span style="color:#ff9f43">13</span>);
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ff6ac1">for</span> (<span style="color:#ff6ac1">auto</span> <span style="color:#ff5c57">_</span> : state) {
-</span></span><span style="display:flex;"><span>    <span style="color:#9aedfe">int32_t</span> sum <span style="color:#ff6ac1">=</span> <span style="color:#ff9f43">0</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#ff6ac1">for</span> (<span style="color:#ff6ac1">const</span> <span style="color:#ff6ac1">auto</span><span style="color:#ff6ac1">&amp;</span> <span style="color:#ff5c57">item</span> : l) {
-</span></span><span style="display:flex;"><span>      sum <span style="color:#ff6ac1">+=</span> item;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    benchmark<span style="color:#ff6ac1">::</span>DoNotOptimize(l);
-</span></span><span style="display:flex;"><span>    benchmark<span style="color:#ff6ac1">::</span>DoNotOptimize(sum);
-</span></span><span style="display:flex;"><span>  }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>BENCHMARK(BM_Iterate_List);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>BENCHMARK_MAIN();
-</span></span></code></pre></div><p>Running on my macbook (M1, 2020), we get the following result (note, I ran this on
+<pre tabindex="0"><code>#include &#34;benchmark/benchmark.h&#34;
+
+#include &lt;forward_list&gt;
+#include &lt;vector&gt;
+#include &lt;cstdint&gt;
+
+#define BENCH_SIZE 1&#39;000&#39;000
+
+static void BM_Iterate_Array(benchmark::State&amp; state) {
+  // set up code, not benchmarked
+  std::vector&lt;int32_t&gt; v;
+  v.reserve(BENCH_SIZE);
+  for (int i = 0; i &lt; BENCH_SIZE; i++) {
+    v.push_back(i % 13);
+  }
+ 
+  // the actual portion being benchmarked
+  for (auto _ : state) {
+    int32_t sum = 0;
+    for (const auto&amp; item : v) {
+      sum += item;
+    }
+
+    // preventing the optimizer from just deleting our code
+    // since it doesnt get used anywhere else.
+    benchmark::DoNotOptimize(v);
+    benchmark::DoNotOptimize(sum);
+  }
+}
+BENCHMARK(BM_Iterate_Array);
+
+static void BM_Iterate_List(benchmark::State&amp; state) {
+  std::forward_list&lt;int32_t&gt; l;
+  for (int i = 0; i &lt; BENCH_SIZE; i++) {
+    l.push_front(i % 13);
+  }
+
+  for (auto _ : state) {
+    int32_t sum = 0;
+    for (const auto&amp; item : l) {
+      sum += item;
+    }
+
+    benchmark::DoNotOptimize(l);
+    benchmark::DoNotOptimize(sum);
+  }
+}
+BENCHMARK(BM_Iterate_List);
+
+BENCHMARK_MAIN();
+</code></pre><p>Running on my macbook (M1, 2020), we get the following result (note, I ran this on
 a modern ryzen threadripper and intel chip recently as well with similar results):</p>
-<div class="highlight"><pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Run on <span style="color:#ff6ac1">(</span><span style="color:#ff9f43">8</span> X 24.0368 MHz CPU s<span style="color:#ff6ac1">)</span>
-</span></span><span style="display:flex;"><span>CPU Caches:
-</span></span><span style="display:flex;"><span>  L1 Data <span style="color:#ff9f43">64</span> KiB
-</span></span><span style="display:flex;"><span>  L1 Instruction <span style="color:#ff9f43">128</span> KiB
-</span></span><span style="display:flex;"><span>  L2 Unified <span style="color:#ff9f43">4096</span> KiB <span style="color:#ff6ac1">(</span>x8<span style="color:#ff6ac1">)</span>
-</span></span><span style="display:flex;"><span>Load Average: 1.25, 1.43, 1.50
-</span></span><span style="display:flex;"><span>-----------------------------------------------------------
-</span></span><span style="display:flex;"><span>Benchmark                 Time             CPU   Iterations
-</span></span><span style="display:flex;"><span>-----------------------------------------------------------
-</span></span><span style="display:flex;"><span>BM_Iterate_Array      <span style="color:#ff9f43">47584</span> ns        <span style="color:#ff9f43">47584</span> ns        <span style="color:#ff9f43">14893</span>
-</span></span><span style="display:flex;"><span>BM_Iterate_List     <span style="color:#ff9f43">1077503</span> ns      <span style="color:#ff9f43">1043300</span> ns          <span style="color:#ff9f43">669</span>
-</span></span></code></pre></div><p>Iterating the data is takes <strong>22x</strong> as long through a linked list
+<pre tabindex="0"><code>Run on (8 X 24.0368 MHz CPU s)
+CPU Caches:
+  L1 Data 64 KiB
+  L1 Instruction 128 KiB
+  L2 Unified 4096 KiB (x8)
+Load Average: 1.25, 1.43, 1.50
+-----------------------------------------------------------
+Benchmark                 Time             CPU   Iterations
+-----------------------------------------------------------
+BM_Iterate_Array      47584 ns        47584 ns        14893
+BM_Iterate_List     1077503 ns      1043300 ns          669
+</code></pre><p>Iterating the data is takes <strong>22x</strong> as long through a linked list
 in this result. Not great.</p>
-<h3 id="other-considerations">Other considerations</h3>
+<h2 id="other-considerations">Other considerations</h2>
 <p>These discontiguous structures often have other useful algorithmic properties, such as quick removals and
 insertions when compared to the default array implementation. While this is true
 for the default implementation on something like <code>std::vector</code>, we can actually
@@ -190,7 +200,7 @@ recover this <em>O(1)</em> removal behavior and insertion, <em>with</em> better 
 in which we swap the to-be-removed element with the last element, and just decrement
 the size of the buffer. (Note, there are other tricks, such as tombstone&rsquo;ing if order
 is important, an exercise for the reader).</p>
-<div class="highlight"><pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C++" data-lang="C++"></code></pre></div><p>This shows us that considering the specifics of our problem, often opens up our ability to
+<p>This shows us that considering the specifics of our problem, often opens up our ability to
 shed assumptions forced on by a particular implementation. In doing so, we retain our paramount
 property of cacheline density, whilst recovering algorithmic efficiency approaches of other
 data structures, nice!</p>
@@ -203,21 +213,21 @@ our data. The results are mostly in line with intution: cache is a finite resour
 more per line = faster processing. The one caveat here is a <em>slight</em> slowdown of u8 vs
 u16 (0.006ms), likely due to some unfortunate conversions happening in the generated
 assembly. Beyond that, we get a 2x speedup from u64 to u32, and from u32 to u16.</p>
-<div class="highlight"><pre tabindex="0" style="color:#e2e4e5;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>Running ./bench
-</span></span><span style="display:flex;"><span>Run on <span style="color:#ff6ac1">(</span><span style="color:#ff9f43">8</span> X 24.1068 MHz CPU s<span style="color:#ff6ac1">)</span>
-</span></span><span style="display:flex;"><span>CPU Caches:
-</span></span><span style="display:flex;"><span>  L1 Data <span style="color:#ff9f43">64</span> KiB
-</span></span><span style="display:flex;"><span>  L1 Instruction <span style="color:#ff9f43">128</span> KiB
-</span></span><span style="display:flex;"><span>  L2 Unified <span style="color:#ff9f43">4096</span> KiB <span style="color:#ff6ac1">(</span>x8<span style="color:#ff6ac1">)</span>
-</span></span><span style="display:flex;"><span>Load Average: 1.25, 1.42, 1.47
-</span></span><span style="display:flex;"><span>---------------------------------------------------------------
-</span></span><span style="display:flex;"><span>Benchmark                     Time             CPU   Iterations
-</span></span><span style="display:flex;"><span>---------------------------------------------------------------
-</span></span><span style="display:flex;"><span>BM_Iterate_Array_u8       <span style="color:#ff9f43">29331</span> ns        <span style="color:#ff9f43">29331</span> ns        <span style="color:#ff9f43">23033</span>
-</span></span><span style="display:flex;"><span>BM_Iterate_Array_u16      <span style="color:#ff9f43">23173</span> ns        <span style="color:#ff9f43">23173</span> ns        <span style="color:#ff9f43">29980</span>
-</span></span><span style="display:flex;"><span>BM_Iterate_Array_u32      <span style="color:#ff9f43">47067</span> ns        <span style="color:#ff9f43">47067</span> ns        <span style="color:#ff9f43">14660</span>
-</span></span><span style="display:flex;"><span>BM_Iterate_Array_u64     <span style="color:#ff9f43">101427</span> ns       <span style="color:#ff9f43">101417</span> ns         <span style="color:#ff9f43">6866</span>
-</span></span></code></pre></div><p>This kind of data layout also opens us up for other optimizations, such as SIMD (single instruction multiple data).</p>
+<pre tabindex="0"><code>Running ./bench
+Run on (8 X 24.1068 MHz CPU s)
+CPU Caches:
+  L1 Data 64 KiB
+  L1 Instruction 128 KiB
+  L2 Unified 4096 KiB (x8)
+Load Average: 1.25, 1.42, 1.47
+---------------------------------------------------------------
+Benchmark                     Time             CPU   Iterations
+---------------------------------------------------------------
+BM_Iterate_Array_u8       29331 ns        29331 ns        23033
+BM_Iterate_Array_u16      23173 ns        23173 ns        29980
+BM_Iterate_Array_u32      47067 ns        47067 ns        14660
+BM_Iterate_Array_u64     101427 ns       101417 ns         6866
+</code></pre><p>This kind of data layout also opens us up for other optimizations, such as SIMD (single instruction multiple data).</p>
 
   
   </div>
@@ -226,16 +236,62 @@ assembly. Beyond that, we get a 2x speedup from u64 to u32, and from u32 to u16.
 
     <footer id="footer">
   <div class="footer-left">
-    Copyright  &copy; 2024  ideas on programming 
+    Copyright  &copy; 2024  superfunc 
   </div>
   <div class="footer-right">
     <nav>
       <ul>
+         
+        <li><a href="/">index</a></li>
+         
+        <li><a href="/tags">tags</a></li>
+         
+        <li><a href="/about">about</a></li>
         
+
+       
+      
+      
+      <li>
+      
+        <a class="icon" target="_blank" rel="noopener" href="https://github.com/superfunc" aria-label="github">
+          <i class="fab fa-github" aria-hidden="true"></i>
+        </a>
+        
+        
+      
+      <li>
+      
+        <a class="icon" target="_blank" rel="noopener" href="https://mastodon.gamedev.place/@superfunc" aria-label="mastodon">
+          <i class="fab fa-mastodon" aria-hidden="true"></i>
+        </a>
+        
+        
+      
+      <li>
+      
+        <a class="icon" target="_blank" rel="noopener" href="https://twitter.com/superfunc" aria-label="twitter">
+          <i class="fab fa-twitter" aria-hidden="true"></i>
+        </a>
+        
+        
+      
+      <li>
+      
+        <a class="icon" target="_blank" rel="noopener" href="https://cohost.org/superfunc" aria-label="codepen">
+          <i class="fab fa-codepen" aria-hidden="true"></i>
+        </a>
+        
+        
+      
+      </li>
+      
+    
       </ul>
     </nav>
   </div>
 </footer>
+
 
 
   </div>

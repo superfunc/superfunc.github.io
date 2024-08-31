@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Workflows on ideas on programming</title>
+    <link>https://superfunc.github.io/workflow/</link>
+    <description>Recent content in Workflows on ideas on programming</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>superfunc</copyright>
+    <lastBuildDate>Sat, 24 Aug 2024 12:01:17 -0700</lastBuildDate>
+    <atom:link href="https://superfunc.github.io/workflow/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>000: Profiling Cmake Build Times</title>
+      <link>https://superfunc.github.io/workflow/profiling-cmake-build-times/</link>
+      <pubDate>Sat, 24 Aug 2024 12:01:17 -0700</pubDate>
+      <guid>https://superfunc.github.io/workflow/profiling-cmake-build-times/</guid>
+      <description>DRAFT&#xA;000: Optimizing Builds with CMake and Ninja Introduction ¬ Build times should be fast. Live in C++land for long enough and you might forget this, but just look at languages that have prioritized compiler performance, and its clearly viable. Go, Jai and Nim are a couple examples that come to mind. Nim is particularly interesting here because its literally generating C code, giving it to a C compiler and letting it generate the binary.</description>
+    </item>
+  </channel>
+</rss>

@@ -7,6 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>superfunc</copyright>
+    <lastBuildDate>Sun, 25 Aug 2024 17:06:11 -0700</lastBuildDate>
     <atom:link href="https://superfunc.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>c</title>
+      <link>https://superfunc.github.io/tags/c/</link>
+      <pubDate>Sun, 25 Aug 2024 17:06:11 -0700</pubDate>
+      <guid>https://superfunc.github.io/tags/c/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>perf</title>
+      <link>https://superfunc.github.io/tags/perf/</link>
+      <pubDate>Sun, 25 Aug 2024 17:06:11 -0700</pubDate>
+      <guid>https://superfunc.github.io/tags/perf/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>
