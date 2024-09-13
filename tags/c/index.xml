@@ -1,27 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>C on ideas on programming</title>
-    <link>https://superfunc.github.io/tags/c/</link>
-    <description>Recent content in C on ideas on programming</description>
+    <title>C on used my train fare to play dodonpachi</title>
+    <link>http://localhost:1313/tags/c/</link>
+    <description>Recent content in C on used my train fare to play dodonpachi</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <copyright>superfunc</copyright>
-    <lastBuildDate>Sun, 25 Aug 2024 17:06:11 -0700</lastBuildDate>
-    <atom:link href="https://superfunc.github.io/tags/c/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>Yoyogi Games LLC</copyright>
+    <lastBuildDate>Tue, 10 Sep 2024 17:06:11 -0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/c/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>000: Speeding Up C Builds on Unix-ish Machines</title>
-      <link>https://superfunc.github.io/perf/000/</link>
-      <pubDate>Sun, 25 Aug 2024 17:06:11 -0700</pubDate>
-      <guid>https://superfunc.github.io/perf/000/</guid>
-      <description>Speeding Up C Builds on Unix-ish Machines Introduction ¬ Build times should be fast. Live in C++land for long enough and you might forget this, but just look at languages that have prioritized compiler performance, and its clearly viable. Go, Jai and Nim are a couple examples that come to mind. Nim is particularly interesting here because its literally generating C code, giving it to a C compiler and letting it generate the binary.</description>
-    </item>
-    <item>
-      <title>001: Contiguous Memory</title>
-      <link>https://superfunc.github.io/perf/001/</link>
-      <pubDate>Sun, 25 Aug 2024 17:06:11 -0700</pubDate>
-      <guid>https://superfunc.github.io/perf/001/</guid>
-      <description>001: Contiguous Memory Motivation Default behaviors, both in systems as well as in people, are incredibly important. The data structures we use day in and day out have a huge impact on performance. While things like asymptotic complexity do have value, I believe the current calculus employed by the average programmer is a bit skewed in the wrong direction. Particularly, I think they are considering things like asymptotic complexity before considering the memory layout of a particular data structure.</description>
+      <title>001: Discarding the Batch Paradigm</title>
+      <link>http://localhost:1313/posts/001-speeding-up-c-builds/</link>
+      <pubDate>Tue, 10 Sep 2024 17:06:11 -0700</pubDate>
+      <guid>http://localhost:1313/posts/001-speeding-up-c-builds/</guid>
+      <description>Introduction ¬ Build times should be fast. Live in C++land for long enough and you might forget this, but just look at languages that have prioritized compiler performance, and its clearly viable. Go, Jai and Nim are a couple examples that come to mind. Nim is particularly interesting here because its literally generating C code, giving it to a C compiler and letting it generate the binary. This illustrates that C can be very fast to compile, if configured well.</description>
     </item>
   </channel>
 </rss>

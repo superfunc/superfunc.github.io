@@ -1,37 +1,43 @@
 <!DOCTYPE html>
 <html lang="en-us">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <link rel="preload" href="/lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" href="/lib/font-awesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" href="/lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" href="/lib/bk/bk.woff" as="font" type="font/woff" crossorigin="anonymous">
 
-  
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title> 001: Discarding the Batch Paradigm | used my train fare to play dodonpachi</title>
-  <link rel = 'canonical' href = '/posts/001-speeding-up-c-builds/'>
+  <link rel = 'canonical' href = 'http://localhost:1313/posts/001-speeding-up-c-builds/'>
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
-  <meta property="og:title" content="001: Discarding the Batch Paradigm" />
-<meta property="og:description" content="Introduction ¬ Build times should be fast. Live in C&#43;&#43;land for long enough and you might forget this, but just look at languages that have prioritized compiler performance, and its clearly viable. Go, Jai and Nim are a couple examples that come to mind. Nim is particularly interesting here because its literally generating C code, giving it to a C compiler and letting it generate the binary. This illustrates that C can be very fast to compile, if configured well." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="/posts/001-speeding-up-c-builds/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2024-09-10T17:06:11-07:00" />
-<meta property="article:modified_time" content="2024-09-10T17:06:11-07:00" />
+  <meta property="og:url" content="http://localhost:1313/posts/001-speeding-up-c-builds/">
+  <meta property="og:site_name" content="used my train fare to play dodonpachi">
+  <meta property="og:title" content="001: Discarding the Batch Paradigm">
+  <meta property="og:description" content="Introduction ¬ Build times should be fast. Live in C&#43;&#43;land for long enough and you might forget this, but just look at languages that have prioritized compiler performance, and its clearly viable. Go, Jai and Nim are a couple examples that come to mind. Nim is particularly interesting here because its literally generating C code, giving it to a C compiler and letting it generate the binary. This illustrates that C can be very fast to compile, if configured well.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-09-10T17:06:11-07:00">
+    <meta property="article:modified_time" content="2024-09-10T17:06:11-07:00">
+    <meta property="article:tag" content="Perf">
+    <meta property="article:tag" content="C">
+    <meta property="article:tag" content="Workflow">
 
-
-  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="001: Discarding the Batch Paradigm"/>
-<meta name="twitter:description" content="Introduction ¬ Build times should be fast. Live in C&#43;&#43;land for long enough and you might forget this, but just look at languages that have prioritized compiler performance, and its clearly viable. Go, Jai and Nim are a couple examples that come to mind. Nim is particularly interesting here because its literally generating C code, giving it to a C compiler and letting it generate the binary. This illustrates that C can be very fast to compile, if configured well."/>
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="001: Discarding the Batch Paradigm">
+  <meta name="twitter:description" content="Introduction ¬ Build times should be fast. Live in C&#43;&#43;land for long enough and you might forget this, but just look at languages that have prioritized compiler performance, and its clearly viable. Go, Jai and Nim are a couple examples that come to mind. Nim is particularly interesting here because its literally generating C code, giving it to a C compiler and letting it generate the binary. This illustrates that C can be very fast to compile, if configured well.">
 
   
   
     
   
   
-  <link rel="stylesheet" href="/css/styles.2a5e71784b11824572356a4e6cf271f8eee419577e08c39feca13c7903d22c78560b967f1028f65d0933f31d1a5f5a470bb44bedd71c8ae7d7daba9fe55e4227.css" integrity="sha512-Kl5xeEsRgkVyNWpObPJx&#43;O7kGVd&#43;CMOf7KE8eQPSLHhWC5Z/ECj2XQkz8x0aX1pHC7RL7dcciufX2rqf5V5CJw=="> 
+  <link rel="stylesheet" href="http://localhost:1313/css/styles.9733d705d7ac29d80e7b06139ae5ba3997136170ec30eaaf256fbef0edfb700b764ff4fba80e6a04f09133f80c03a7969f593a08dae74b43b0ff4535e3c0afc5.css" integrity="sha512-lzPXBdesKdgOewYTmuW6OZcTYXDsMOqvJW&#43;&#43;8O37cAt2T/T7qA5qBPCRM/gMA6eWn1k6CNrnS0Ow/0U148CvxQ=="> 
 
   
   
@@ -43,9 +49,8 @@
   
 
   
-<link rel="icon" type="image/png" href="/images/favicon.ico" />
+<link rel="icon" type="image/png" href="http://localhost:1313/images/favicon.ico" />
 
-  
   
   
   
@@ -75,7 +80,7 @@
       <ul>
         
         <li>
-          <a class="icon" href=" /posts/000-milestone-history/" aria-label="Previous">
+          <a class="icon" href=" http://localhost:1313/posts/000-milestone-history/" aria-label="Previous">
             <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i>
           </a>
         </li>
@@ -107,47 +112,47 @@
   
   
   <li>
-    <a class="icon" href="http://www.facebook.com/sharer.php?u=%2fposts%2f001-speeding-up-c-builds%2f" aria-label="Facebook">
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f" aria-label="Facebook">
       <i class="fab fa-facebook " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://twitter.com/share?url=%2fposts%2f001-speeding-up-c-builds%2f&text=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Twitter">
+    <a class="icon" href="https://twitter.com/share?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&text=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Twitter">
       <i class="fab fa-twitter " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.linkedin.com/shareArticle?url=%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Linkedin">
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Linkedin">
       <i class="fab fa-linkedin " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=%2fposts%2f001-speeding-up-c-builds%2f&is_video=false&description=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Pinterest">
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&is_video=false&description=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Pinterest">
       <i class="fab fa-pinterest " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="mailto:?subject=001%3a%20Discarding%20the%20Batch%20Paradigm&body=Check out this article: %2fposts%2f001-speeding-up-c-builds%2f" aria-label="Email">
+    <a class="icon" href="mailto:?subject=001%3a%20Discarding%20the%20Batch%20Paradigm&body=Check out this article: http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f" aria-label="Email">
       <i class="fas fa-envelope " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://getpocket.com/save?url=%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Pocket">
+    <a class="icon" href="https://getpocket.com/save?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Pocket">
       <i class="fab fa-get-pocket " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://reddit.com/submit?url=%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="reddit">
+    <a class="icon" href="http://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="reddit">
       <i class="fab fa-reddit " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=%2fposts%2f001-speeding-up-c-builds%2f&name=001%3a%20Discarding%20the%20Batch%20Paradigm&description=Introduction%20%c2%ac%20Build%20times%20should%20be%20fast.%20Live%20in%20C%2b%2bland%20for%20long%20enough%20and%20you%20might%20forget%20this%2c%20but%20just%20look%20at%20languages%20that%20have%20prioritized%20compiler%20performance%2c%20and%20its%20clearly%20viable.%20Go%2c%20Jai%20and%20Nim%20are%20a%20couple%20examples%20that%20come%20to%20mind.%20Nim%20is%20particularly%20interesting%20here%20because%20its%20literally%20generating%20C%20code%2c%20giving%20it%20to%20a%20C%20compiler%20and%20letting%20it%20generate%20the%20binary.%20This%20illustrates%20that%20C%20can%20be%20very%20fast%20to%20compile%2c%20if%20configured%20well." aria-label="Tumblr">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&name=001%3a%20Discarding%20the%20Batch%20Paradigm&description=Introduction%20%c2%ac%20Build%20times%20should%20be%20fast.%20Live%20in%20C%2b%2bland%20for%20long%20enough%20and%20you%20might%20forget%20this%2c%20but%20just%20look%20at%20languages%20that%20have%20prioritized%20compiler%20performance%2c%20and%20its%20clearly%20viable.%20Go%2c%20Jai%20and%20Nim%20are%20a%20couple%20examples%20that%20come%20to%20mind.%20Nim%20is%20particularly%20interesting%20here%20because%20its%20literally%20generating%20C%20code%2c%20giving%20it%20to%20a%20C%20compiler%20and%20letting%20it%20generate%20the%20binary.%20This%20illustrates%20that%20C%20can%20be%20very%20fast%20to%20compile%2c%20if%20configured%20well." aria-label="Tumblr">
       <i class="fab fa-tumblr " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://news.ycombinator.com/submitlink?u=%2fposts%2f001-speeding-up-c-builds%2f&t=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Hacker News">
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&t=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Hacker News">
       <i class="fab fa-hacker-news " aria-hidden="true"></i>
     </a>
   </li>
@@ -312,47 +317,47 @@ with tools full of a butt ton of DLLs hasn&rsquo;t paid Rui to integrate Windows
   
   
   <li>
-    <a class="icon" href="http://www.facebook.com/sharer.php?u=%2fposts%2f001-speeding-up-c-builds%2f" aria-label="Facebook">
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f" aria-label="Facebook">
       <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://twitter.com/share?url=%2fposts%2f001-speeding-up-c-builds%2f&text=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Twitter">
+    <a class="icon" href="https://twitter.com/share?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&text=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Twitter">
       <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.linkedin.com/shareArticle?url=%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Linkedin">
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Linkedin">
       <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=%2fposts%2f001-speeding-up-c-builds%2f&is_video=false&description=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Pinterest">
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&is_video=false&description=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Pinterest">
       <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="mailto:?subject=001%3a%20Discarding%20the%20Batch%20Paradigm&body=Check out this article: %2fposts%2f001-speeding-up-c-builds%2f" aria-label="Email">
+    <a class="icon" href="mailto:?subject=001%3a%20Discarding%20the%20Batch%20Paradigm&body=Check out this article: http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f" aria-label="Email">
       <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://getpocket.com/save?url=%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Pocket">
+    <a class="icon" href="https://getpocket.com/save?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Pocket">
       <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://reddit.com/submit?url=%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="reddit">
+    <a class="icon" href="http://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="reddit">
       <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=%2fposts%2f001-speeding-up-c-builds%2f&name=001%3a%20Discarding%20the%20Batch%20Paradigm&description=Introduction%20%c2%ac%20Build%20times%20should%20be%20fast.%20Live%20in%20C%2b%2bland%20for%20long%20enough%20and%20you%20might%20forget%20this%2c%20but%20just%20look%20at%20languages%20that%20have%20prioritized%20compiler%20performance%2c%20and%20its%20clearly%20viable.%20Go%2c%20Jai%20and%20Nim%20are%20a%20couple%20examples%20that%20come%20to%20mind.%20Nim%20is%20particularly%20interesting%20here%20because%20its%20literally%20generating%20C%20code%2c%20giving%20it%20to%20a%20C%20compiler%20and%20letting%20it%20generate%20the%20binary.%20This%20illustrates%20that%20C%20can%20be%20very%20fast%20to%20compile%2c%20if%20configured%20well." aria-label="Tumblr">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&name=001%3a%20Discarding%20the%20Batch%20Paradigm&description=Introduction%20%c2%ac%20Build%20times%20should%20be%20fast.%20Live%20in%20C%2b%2bland%20for%20long%20enough%20and%20you%20might%20forget%20this%2c%20but%20just%20look%20at%20languages%20that%20have%20prioritized%20compiler%20performance%2c%20and%20its%20clearly%20viable.%20Go%2c%20Jai%20and%20Nim%20are%20a%20couple%20examples%20that%20come%20to%20mind.%20Nim%20is%20particularly%20interesting%20here%20because%20its%20literally%20generating%20C%20code%2c%20giving%20it%20to%20a%20C%20compiler%20and%20letting%20it%20generate%20the%20binary.%20This%20illustrates%20that%20C%20can%20be%20very%20fast%20to%20compile%2c%20if%20configured%20well." aria-label="Tumblr">
       <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://news.ycombinator.com/submitlink?u=%2fposts%2f001-speeding-up-c-builds%2f&t=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Hacker News">
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&t=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Hacker News">
       <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
     </a>
   </li>

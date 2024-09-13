@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>workflow on used my train fare to play dodonpachi</title>
-    <link>/tags/workflow/</link>
-    <description>Recent content in workflow on used my train fare to play dodonpachi</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <title>Workflow on used my train fare to play dodonpachi</title>
+    <link>http://localhost:1313/tags/workflow/</link>
+    <description>Recent content in Workflow on used my train fare to play dodonpachi</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
     <copyright>Yoyogi Games LLC</copyright>
     <lastBuildDate>Tue, 10 Sep 2024 17:06:11 -0700</lastBuildDate>
-    <atom:link href="/tags/workflow/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/workflow/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>001: Discarding the Batch Paradigm</title>
-      <link>/posts/001-speeding-up-c-builds/</link>
+      <link>http://localhost:1313/posts/001-speeding-up-c-builds/</link>
       <pubDate>Tue, 10 Sep 2024 17:06:11 -0700</pubDate>
-      <guid>/posts/001-speeding-up-c-builds/</guid>
+      <guid>http://localhost:1313/posts/001-speeding-up-c-builds/</guid>
       <description>Introduction ¬ Build times should be fast. Live in C++land for long enough and you might forget this, but just look at languages that have prioritized compiler performance, and its clearly viable. Go, Jai and Nim are a couple examples that come to mind. Nim is particularly interesting here because its literally generating C code, giving it to a C compiler and letting it generate the binary. This illustrates that C can be very fast to compile, if configured well.</description>
     </item>
   </channel>
