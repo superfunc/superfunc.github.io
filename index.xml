@@ -2,32 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>used my train fare to play dodonpachi</title>
-    <link>https://superfunc.github.io/</link>
+    <link>/</link>
     <description>Recent content on used my train fare to play dodonpachi</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>superfunc</copyright>
+    <copyright>Yoyogi Games LLC</copyright>
     <lastBuildDate>Tue, 10 Sep 2024 17:06:11 -0700</lastBuildDate>
-    <atom:link href="https://superfunc.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>001: Speeding Up C Builds on Unix-ish Machines</title>
-      <link>https://superfunc.github.io/posts/001-speeding-up-c-builds/</link>
+      <title>001: Discarding the Batch Paradigm</title>
+      <link>/posts/001-speeding-up-c-builds/</link>
       <pubDate>Tue, 10 Sep 2024 17:06:11 -0700</pubDate>
-      <guid>https://superfunc.github.io/posts/001-speeding-up-c-builds/</guid>
-      <description>Speeding Up C Builds on Unix-ish Machines Introduction ¬ Build times should be fast. Live in C++land for long enough and you might forget this, but just look at languages that have prioritized compiler performance, and its clearly viable. Go, Jai and Nim are a couple examples that come to mind. Nim is particularly interesting here because its literally generating C code, giving it to a C compiler and letting it generate the binary.</description>
+      <guid>/posts/001-speeding-up-c-builds/</guid>
+      <description>Introduction ¬ Build times should be fast. Live in C++land for long enough and you might forget this, but just look at languages that have prioritized compiler performance, and its clearly viable. Go, Jai and Nim are a couple examples that come to mind. Nim is particularly interesting here because its literally generating C code, giving it to a C compiler and letting it generate the binary. This illustrates that C can be very fast to compile, if configured well.</description>
     </item>
     <item>
       <title>000: Some Milestone History, and 3DS Emulation</title>
-      <link>https://superfunc.github.io/posts/000-milestone-history/</link>
+      <link>/posts/000-milestone-history/</link>
       <pubDate>Sun, 01 Oct 2023 11:50:16 -0700</pubDate>
-      <guid>https://superfunc.github.io/posts/000-milestone-history/</guid>
+      <guid>/posts/000-milestone-history/</guid>
       <description>Radirgy De Gojaru (ラジルギでごじゃる）was a score chasing focused mini-shmup released for the 3DS by Klon. &amp;ldquo;Who is Klon?&amp;rdquo; you might ask, along with &amp;ldquo;I thought MileStone/RS34 made Radirgy?&amp;rdquo;. I&amp;rsquo;m so glad you asked! The history is a little murky, given MileStone&amp;rsquo;s relative obscurity, and probably the embarrassing way they closed (ceo broke stock laws and went to jail), but I&amp;rsquo;ll give it a shot.&#xA;Klon co. ltd. was a company that provided development services for games, formed in 2003, well before the MileStone closure in 2013.</description>
     </item>
     <item>
       <title>About me</title>
-      <link>https://superfunc.github.io/about/</link>
+      <link>/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://superfunc.github.io/about/</guid>
+      <guid>/about/</guid>
       <description>I&amp;rsquo;m Josh. I&amp;rsquo;m a programmer and game designer.&#xA;I worked in animated films for a long while: primarily on a file format called USD and pipeline&amp;rsquo;s surrounding it at Disney Animation, Pixar and Netflix. After that I spent some time in tech at NVIDIA working on Omniverse and AAA engine things at That&amp;rsquo;s No Moon.&#xA;In 2023 I founded Yoyogi Games to focus on building the kinds of games I like, video game ass video games.</description>
     </item>
   </channel>

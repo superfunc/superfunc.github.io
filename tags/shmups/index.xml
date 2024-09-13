@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>shmups on used my train fare to play dodonpachi</title>
-    <link>https://superfunc.github.io/tags/shmups/</link>
+    <link>/tags/shmups/</link>
     <description>Recent content in shmups on used my train fare to play dodonpachi</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>superfunc</copyright>
+    <copyright>Yoyogi Games LLC</copyright>
     <lastBuildDate>Sun, 01 Oct 2023 11:50:16 -0700</lastBuildDate>
-    <atom:link href="https://superfunc.github.io/tags/shmups/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/tags/shmups/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>000: Some Milestone History, and 3DS Emulation</title>
-      <link>https://superfunc.github.io/posts/000-milestone-history/</link>
+      <link>/posts/000-milestone-history/</link>
       <pubDate>Sun, 01 Oct 2023 11:50:16 -0700</pubDate>
-      <guid>https://superfunc.github.io/posts/000-milestone-history/</guid>
+      <guid>/posts/000-milestone-history/</guid>
       <description>Radirgy De Gojaru (ラジルギでごじゃる）was a score chasing focused mini-shmup released for the 3DS by Klon. &amp;ldquo;Who is Klon?&amp;rdquo; you might ask, along with &amp;ldquo;I thought MileStone/RS34 made Radirgy?&amp;rdquo;. I&amp;rsquo;m so glad you asked! The history is a little murky, given MileStone&amp;rsquo;s relative obscurity, and probably the embarrassing way they closed (ceo broke stock laws and went to jail), but I&amp;rsquo;ll give it a shot.&#xA;Klon co. ltd. was a company that provided development services for games, formed in 2003, well before the MileStone closure in 2013.</description>
     </item>
   </channel>

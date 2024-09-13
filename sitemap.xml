@@ -2,32 +2,35 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://superfunc.github.io/posts/001-speeding-up-c-builds/</loc>
+    <loc>/posts/001-speeding-up-c-builds/</loc>
     <lastmod>2024-09-10T17:06:11-07:00</lastmod>
   </url><url>
-    <loc>https://superfunc.github.io/tags/c/</loc>
+    <loc>/tags/c/</loc>
     <lastmod>2024-09-10T17:06:11-07:00</lastmod>
   </url><url>
-    <loc>https://superfunc.github.io/tags/perf/</loc>
+    <loc>/tags/perf/</loc>
     <lastmod>2024-09-10T17:06:11-07:00</lastmod>
   </url><url>
-    <loc>https://superfunc.github.io/posts/</loc>
+    <loc>/posts/</loc>
     <lastmod>2024-09-10T17:06:11-07:00</lastmod>
   </url><url>
-    <loc>https://superfunc.github.io/tags/</loc>
+    <loc>/tags/</loc>
     <lastmod>2024-09-10T17:06:11-07:00</lastmod>
   </url><url>
-    <loc>https://superfunc.github.io/</loc>
+    <loc>/</loc>
     <lastmod>2024-09-10T17:06:11-07:00</lastmod>
   </url><url>
-    <loc>https://superfunc.github.io/posts/000-milestone-history/</loc>
+    <loc>/tags/workflow/</loc>
+    <lastmod>2024-09-10T17:06:11-07:00</lastmod>
+  </url><url>
+    <loc>/posts/000-milestone-history/</loc>
     <lastmod>2023-10-01T11:50:16-07:00</lastmod>
   </url><url>
-    <loc>https://superfunc.github.io/tags/shmups/</loc>
+    <loc>/tags/shmups/</loc>
     <lastmod>2023-10-01T11:50:16-07:00</lastmod>
   </url><url>
-    <loc>https://superfunc.github.io/about/</loc>
+    <loc>/about/</loc>
   </url><url>
-    <loc>https://superfunc.github.io/categories/</loc>
+    <loc>/categories/</loc>
   </url>
 </urlset>
