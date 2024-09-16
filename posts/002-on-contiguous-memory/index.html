@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="/lib/bk/bk.woff" as="font" type="font/woff" crossorigin="anonymous">
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> 002: Contiguous Memory | used my train fare to play dodonpachi</title>
+  <link rel = 'canonical' href = 'http://localhost:1313/posts/002-on-contiguous-memory/'>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:url" content="http://localhost:1313/posts/002-on-contiguous-memory/">
+  <meta property="og:site_name" content="used my train fare to play dodonpachi">
+  <meta property="og:title" content="002: Contiguous Memory">
+  <meta property="og:description" content="002: Contiguous Memory Motivation Default behaviors, both in systems as well as in people, are incredibly important. The data structures we use day in and day out have a huge impact on performance. While things like asymptotic complexity do have value, I believe the current calculus employed by the average programmer is a bit skewed in the wrong direction. Particularly, I think they are considering things like asymptotic complexity before considering the memory layout of a particular data structure.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-09-15T17:06:11-07:00">
+    <meta property="article:modified_time" content="2024-09-15T17:06:11-07:00">
+    <meta property="article:tag" content="Perf">
+    <meta property="article:tag" content="C">
+
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="002: Contiguous Memory">
+  <meta name="twitter:description" content="002: Contiguous Memory Motivation Default behaviors, both in systems as well as in people, are incredibly important. The data structures we use day in and day out have a huge impact on performance. While things like asymptotic complexity do have value, I believe the current calculus employed by the average programmer is a bit skewed in the wrong direction. Particularly, I think they are considering things like asymptotic complexity before considering the memory layout of a particular data structure.">
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="http://localhost:1313/css/styles.9733d705d7ac29d80e7b06139ae5ba3997136170ec30eaaf256fbef0edfb700b764ff4fba80e6a04f09133f80c03a7969f593a08dae74b43b0ff4535e3c0afc5.css" integrity="sha512-lzPXBdesKdgOewYTmuW6OZcTYXDsMOqvJW&#43;&#43;8O37cAt2T/T7qA5qBPCRM/gMA6eWn1k6CNrnS0Ow/0U148CvxQ=="> 
+
+  
+  
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="http://localhost:1313/images/favicon.ico" />
+
+  
+  
+  
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+  <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;" aria-label="Top of Page"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+        <li><a href="/">index</a></li>
+         
+        <li><a href="/tags">tags</a></li>
+         
+        <li><a href="/about">about</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li>
+          <a class="icon" href=" http://localhost:1313/posts/001-speeding-up-c-builds/" aria-label="Previous">
+            <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i>
+          </a>
+        </li>
+        
+        
+        <li>
+          <a class="icon" href="http://localhost:1313/posts/003-re-engaging/" aria-label="Next">
+            <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i>
+          </a>
+        </li>
+        
+        <li>
+          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" aria-label="Top of Page">
+            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i>
+          </a>
+        </li>
+        <li>
+          <a class="icon" href="#" aria-label="Share">
+            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
+          </a>
+        </li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2f002-on-contiguous-memory%2f" aria-label="Facebook">
+      <i class="fab fa-facebook " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f002-on-contiguous-memory%2f&text=002%3a%20Contiguous%20Memory" aria-label="Twitter">
+      <i class="fab fa-twitter " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f002-on-contiguous-memory%2f&title=002%3a%20Contiguous%20Memory" aria-label="Linkedin">
+      <i class="fab fa-linkedin " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f002-on-contiguous-memory%2f&is_video=false&description=002%3a%20Contiguous%20Memory" aria-label="Pinterest">
+      <i class="fab fa-pinterest " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=002%3a%20Contiguous%20Memory&body=Check out this article: http%3a%2f%2flocalhost%3a1313%2fposts%2f002-on-contiguous-memory%2f" aria-label="Email">
+      <i class="fas fa-envelope " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f002-on-contiguous-memory%2f&title=002%3a%20Contiguous%20Memory" aria-label="Pocket">
+      <i class="fab fa-get-pocket " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f002-on-contiguous-memory%2f&title=002%3a%20Contiguous%20Memory" aria-label="reddit">
+      <i class="fab fa-reddit " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f002-on-contiguous-memory%2f&name=002%3a%20Contiguous%20Memory&description=002%3a%20Contiguous%20Memory%20Motivation%20Default%20behaviors%2c%20both%20in%20systems%20as%20well%20as%20in%20people%2c%20are%20incredibly%20important.%20The%20data%20structures%20we%20use%20day%20in%20and%20day%20out%20have%20a%20huge%20impact%20on%20performance.%20While%20things%20like%20asymptotic%20complexity%20do%20have%20value%2c%20I%20believe%20the%20current%20calculus%20employed%20by%20the%20average%20programmer%20is%20a%20bit%20skewed%20in%20the%20wrong%20direction.%20Particularly%2c%20I%20think%20they%20are%20considering%20things%20like%20asymptotic%20complexity%20before%20considering%20the%20memory%20layout%20of%20a%20particular%20data%20structure." aria-label="Tumblr">
+      <i class="fab fa-tumblr " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=http%3a%2f%2flocalhost%3a1313%2fposts%2f002-on-contiguous-memory%2f&t=002%3a%20Contiguous%20Memory" aria-label="Hacker News">
+      <i class="fab fa-hacker-news " aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+    
+    <div id="toc">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#motivation">Motivation</a></li>
+    <li><a href="#initial-numbers">Initial Numbers</a></li>
+    <li><a href="#other-considerations">Other considerations</a>
+      <ul>
+        <li><a href="#keeping-things-open">Keeping things open</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+  </span>
+</div>
+
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 class="posttitle" itemprop="name headline">
+        002: Contiguous Memory
+      </h1>
+      <div class="meta">
+        
+        <div class="postdate">
+          
+          <time datetime="2024-09-15 17:06:11 -0700 PDT" itemprop="datePublished">2024-09-15</time>
+          
+        </div>
+        
+        
+        
+        
+        <div class="article-tag">
+            <i class="fas fa-tag"></i>
+            
+            
+            <a class="tag-link" href="/tags/perf" rel="tag">perf</a>
+            
+             ,  
+            <a class="tag-link" href="/tags/c" rel="tag">c</a>
+            
+        </div>
+        
+      </div>
+    </header>
+
+  
+    
+    <div class="content" itemprop="articleBody">
+      <h1 id="002-contiguous-memory">002: Contiguous Memory</h1>
+<h2 id="motivation">Motivation</h2>
+<p>Default behaviors, both in systems as well as in people, are incredibly
+important. The data structures we use day in and day out have a huge impact
+on performance. While things like asymptotic complexity do have value,
+I believe the current calculus employed by the average programmer is a bit
+skewed in the wrong direction. Particularly, I think they are considering
+things like asymptotic complexity before considering the memory layout of
+a particular data structure. For the vast majority of situations, this
+is the wrong approach.</p>
+<p>The rate of increasing speed for processors has dwarfed that of their
+memory counterparts. When <a href="https://en.wikipedia.org/wiki/Big_O_notation">Big-O notation</a>(the
+common way of discussing asymptotic complexity) was forumlated, the cost of a memory
+access was within the same magnitude as the cost of computation. These days,
+that isn&rsquo;t remotely true. We must consider the memory subsystem first
+if we care about performance, and next consider the efficiency properties
+of our approach. In short, we need a better default way of thinking.</p>
+<p>The first data structure you should be reaching for, should <strong>almost always
+be an array</strong>. A contiguous layout is the most amenable thing we could give to
+a modern CPU. Contrast this with other data structures, such as a map, or
+a list, which have heaps of indirection, causing countless stalls when
+we need to iterate through that data.</p>
+<p>CPUs don&rsquo;t grab data one byte at a time, data is fetched in cacheline sizes,
+typically 64 bytes, but can differ (32 bytes on a Pi, 128 bytes on the new
+apple silicon). Because of this when you fetch something from a non-contiguous
+data structure, like a linked list, you are essentially wasting the remainder
+of that cacheline being pulled along for the ride. With an array, its all able
+to be immediately utilized by the CPU.</p>
+<h2 id="initial-numbers">Initial Numbers</h2>
+<p>To demonstrate this, lets whip up a quick benchmark, simply iterating through
+a set of data, stored in a vector, and a linked list. We&rsquo;ll use google&rsquo;s excellent
+<a href="https://github.com/google/benchmark">benchmark library</a> to get some reasonably
+statistical results. (While I&rsquo;m not a fan of the STL, we use it for readers'
+familiarity &amp; comfort below).</p>
+<pre tabindex="0"><code>#include &#34;benchmark/benchmark.h&#34;
+
+#include &lt;forward_list&gt;
+#include &lt;vector&gt;
+#include &lt;cstdint&gt;
+
+#define BENCH_SIZE 1&#39;000&#39;000
+
+static void BM_Iterate_Array(benchmark::State&amp; state) {
+  // set up code, not benchmarked
+  std::vector&lt;int32_t&gt; v;
+  v.reserve(BENCH_SIZE);
+  for (int i = 0; i &lt; BENCH_SIZE; i++) {
+    v.push_back(i % 13);
+  }
+ 
+  // the actual portion being benchmarked
+  for (auto _ : state) {
+    int32_t sum = 0;
+    for (const auto&amp; item : v) {
+      sum += item;
+    }
+
+    // preventing the optimizer from just deleting our code
+    // since it doesnt get used anywhere else.
+    benchmark::DoNotOptimize(v);
+    benchmark::DoNotOptimize(sum);
+  }
+}
+BENCHMARK(BM_Iterate_Array);
+
+static void BM_Iterate_List(benchmark::State&amp; state) {
+  std::forward_list&lt;int32_t&gt; l;
+  for (int i = 0; i &lt; BENCH_SIZE; i++) {
+    l.push_front(i % 13);
+  }
+
+  for (auto _ : state) {
+    int32_t sum = 0;
+    for (const auto&amp; item : l) {
+      sum += item;
+    }
+
+    benchmark::DoNotOptimize(l);
+    benchmark::DoNotOptimize(sum);
+  }
+}
+BENCHMARK(BM_Iterate_List);
+
+BENCHMARK_MAIN();
+</code></pre><p>Running on my macbook (M1, 2020), we get the following result (note, I ran this on
+a modern ryzen threadripper and intel chip recently as well with similar results):</p>
+<pre tabindex="0"><code>Run on (8 X 24.0368 MHz CPU s)
+CPU Caches:
+  L1 Data 64 KiB
+  L1 Instruction 128 KiB
+  L2 Unified 4096 KiB (x8)
+Load Average: 1.25, 1.43, 1.50
+-----------------------------------------------------------
+Benchmark                 Time             CPU   Iterations
+-----------------------------------------------------------
+BM_Iterate_Array      47584 ns        47584 ns        14893
+BM_Iterate_List     1077503 ns      1043300 ns          669
+</code></pre><p>Iterating the data is takes <strong>22x</strong> as long through a linked list
+in this result. Not great.</p>
+<h2 id="other-considerations">Other considerations</h2>
+<p>These discontiguous structures often have other useful algorithmic properties, such as quick removals and
+insertions when compared to the default array implementation. While this is true
+for the default implementation on something like <code>std::vector</code>, we can actually
+recover this <em>O(1)</em> removal behavior and insertion, <em>with</em> better overall performance.</p>
+<p>For example, if retaining order isn&rsquo;t important to us, we can simply do a &lsquo;swap-remove&rsquo;,
+in which we swap the to-be-removed element with the last element, and just decrement
+the size of the buffer. (Note, there are other tricks, such as tombstone&rsquo;ing if order
+is important, an exercise for the reader).</p>
+<p>This shows us that considering the specifics of our problem, often opens up our ability to
+shed assumptions forced on by a particular implementation. In doing so, we retain our paramount
+property of cacheline density, whilst recovering algorithmic efficiency approaches of other
+data structures, nice!</p>
+<h3 id="keeping-things-open">Keeping things open</h3>
+<p>Another key aspect of utilizing cache friendly data structures like an array is that it opens
+up the possibility for further optimization. Particularly, shrinking our data types being stored
+in the array has a direct impact on cacheline density.</p>
+<p>Going back to our array iteration benchmark, we can look what happens if we try compacting
+our data. The results are mostly in line with intution: cache is a finite resources, smaller data =
+more per line = faster processing. The one caveat here is a <em>slight</em> slowdown of u8 vs
+u16 (0.006ms), likely due to some unfortunate conversions happening in the generated
+assembly. Beyond that, we get a 2x speedup from u64 to u32, and from u32 to u16.</p>
+<pre tabindex="0"><code>Running ./bench
+Run on (8 X 24.1068 MHz CPU s)
+CPU Caches:
+  L1 Data 64 KiB
+  L1 Instruction 128 KiB
+  L2 Unified 4096 KiB (x8)
+Load Average: 1.25, 1.42, 1.47
+---------------------------------------------------------------
+Benchmark                     Time             CPU   Iterations
+---------------------------------------------------------------
+BM_Iterate_Array_u8       29331 ns        29331 ns        23033
+BM_Iterate_Array_u16      23173 ns        23173 ns        29980
+BM_Iterate_Array_u32      47067 ns        47067 ns        14660
+BM_Iterate_Array_u64     101427 ns       101417 ns         6866
+</code></pre><p>This kind of data layout also opens us up for other optimizations, such as SIMD (single instruction multiple data).</p>
+
+    </div>
+  </article>
+
+  
+  
+
+
+
+
+
+
+  <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">index</a></li>
+         
+          <li><a href="/tags">tags</a></li>
+         
+          <li><a href="/about">about</a></li>
+        
+      </ul>
+    </div>
+
+    
+    <div id="toc-footer" style="display: none">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#motivation">Motivation</a></li>
+    <li><a href="#initial-numbers">Initial Numbers</a></li>
+    <li><a href="#other-considerations">Other considerations</a>
+      <ul>
+        <li><a href="#keeping-things-open">Keeping things open</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+    
+
+    <div id="share-footer" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2f002-on-contiguous-memory%2f" aria-label="Facebook">
+      <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f002-on-contiguous-memory%2f&text=002%3a%20Contiguous%20Memory" aria-label="Twitter">
+      <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f002-on-contiguous-memory%2f&title=002%3a%20Contiguous%20Memory" aria-label="Linkedin">
+      <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f002-on-contiguous-memory%2f&is_video=false&description=002%3a%20Contiguous%20Memory" aria-label="Pinterest">
+      <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=002%3a%20Contiguous%20Memory&body=Check out this article: http%3a%2f%2flocalhost%3a1313%2fposts%2f002-on-contiguous-memory%2f" aria-label="Email">
+      <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f002-on-contiguous-memory%2f&title=002%3a%20Contiguous%20Memory" aria-label="Pocket">
+      <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f002-on-contiguous-memory%2f&title=002%3a%20Contiguous%20Memory" aria-label="reddit">
+      <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f002-on-contiguous-memory%2f&name=002%3a%20Contiguous%20Memory&description=002%3a%20Contiguous%20Memory%20Motivation%20Default%20behaviors%2c%20both%20in%20systems%20as%20well%20as%20in%20people%2c%20are%20incredibly%20important.%20The%20data%20structures%20we%20use%20day%20in%20and%20day%20out%20have%20a%20huge%20impact%20on%20performance.%20While%20things%20like%20asymptotic%20complexity%20do%20have%20value%2c%20I%20believe%20the%20current%20calculus%20employed%20by%20the%20average%20programmer%20is%20a%20bit%20skewed%20in%20the%20wrong%20direction.%20Particularly%2c%20I%20think%20they%20are%20considering%20things%20like%20asymptotic%20complexity%20before%20considering%20the%20memory%20layout%20of%20a%20particular%20data%20structure." aria-label="Tumblr">
+      <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=http%3a%2f%2flocalhost%3a1313%2fposts%2f002-on-contiguous-memory%2f&t=002%3a%20Contiguous%20Memory" aria-label="Hacker News">
+      <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      
+        <a id="menu-toggle" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;" aria-label="Menu">
+          <i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="toc-toggle" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;" aria-label="TOC">
+          <i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share-toggle" class="icon" href="#" onclick="$('#share-footer').toggle();return false;" aria-label="Share">
+          <i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" aria-label="Top of Page">
+          <i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+
+  <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2024  Yoyogi Games LLC 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">index</a></li>
+         
+        <li><a href="/tags">tags</a></li>
+         
+        <li><a href="/about">about</a></li>
+        
+
+       
+      
+      
+      <li>
+      
+        <a class="icon" target="_blank" rel="noopener" href="https://github.com/superfunc" aria-label="github">
+          <i class="fab fa-github" aria-hidden="true"></i>
+        </a>
+        
+        
+      
+      <li>
+      
+        <a class="icon" target="_blank" rel="noopener" href="https://mastodon.gamedev.place/@superfunc" aria-label="mastodon">
+          <i class="fab fa-mastodon" aria-hidden="true"></i>
+        </a>
+        
+        
+      
+      <li>
+      
+        <a class="icon" target="_blank" rel="noopener" href="https://twitter.com/superfunc" aria-label="twitter">
+          <i class="fab fa-twitter" aria-hidden="true"></i>
+        </a>
+        
+        
+      
+      <li>
+      
+        <a class="icon" target="_blank" rel="noopener" href="https://cohost.org/superfunc" aria-label="codepen">
+          <i class="fab fa-codepen" aria-hidden="true"></i>
+        </a>
+        
+        
+      
+      </li>
+      
+    
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+
+
+  </div>
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+
+<script src=/js/code-copy.js></script>
+
+
+
+  
+
+
+</html>

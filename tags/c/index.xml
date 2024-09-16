@@ -7,8 +7,15 @@
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright>Yoyogi Games LLC</copyright>
-    <lastBuildDate>Tue, 10 Sep 2024 17:06:11 -0700</lastBuildDate>
+    <lastBuildDate>Sun, 15 Sep 2024 17:06:11 -0700</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/c/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>002: Contiguous Memory</title>
+      <link>http://localhost:1313/posts/002-on-contiguous-memory/</link>
+      <pubDate>Sun, 15 Sep 2024 17:06:11 -0700</pubDate>
+      <guid>http://localhost:1313/posts/002-on-contiguous-memory/</guid>
+      <description>002: Contiguous Memory Motivation Default behaviors, both in systems as well as in people, are incredibly important. The data structures we use day in and day out have a huge impact on performance. While things like asymptotic complexity do have value, I believe the current calculus employed by the average programmer is a bit skewed in the wrong direction. Particularly, I think they are considering things like asymptotic complexity before considering the memory layout of a particular data structure.</description>
+    </item>
     <item>
       <title>001: Discarding the Batch Paradigm</title>
       <link>http://localhost:1313/posts/001-speeding-up-c-builds/</link>
