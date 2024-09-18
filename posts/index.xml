@@ -7,21 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Yoyogi Games LLC</copyright>
-    <lastBuildDate>Mon, 16 Sep 2024 17:06:11 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 16 Sep 2024 13:25:49 -0700</lastBuildDate>
     <atom:link href="https://www.superfunc.zone/posts/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>001: Discarding the Batch Paradigm, Part 1</title>
-      <link>https://www.superfunc.zone/posts/001-speeding-up-c-builds/</link>
-      <pubDate>Mon, 16 Sep 2024 17:06:11 -0700</pubDate>
-      <guid>https://www.superfunc.zone/posts/001-speeding-up-c-builds/</guid>
-      <description>Introduction I remember watching demos of Common LISP&amp;rsquo;s SLIME interface ten years ago (stay with me, this is about C, I promise). It had live reloading features that just seemed magical. Smalltalk also had some incredible features for live-reloading and environment introspection. There have been countless other systems like this built over the years. The common thread is the notion of a contextually aware environment. The environment provides a persistent entity that works with you to understand, iterate on and test your program.</description>
-    </item>
     <item>
       <title>003: Re Engaging (A Reading List)</title>
       <link>https://www.superfunc.zone/posts/003-re-engaging/</link>
       <pubDate>Mon, 16 Sep 2024 13:25:49 -0700</pubDate>
       <guid>https://www.superfunc.zone/posts/003-re-engaging/</guid>
       <description>Background It&amp;rsquo;s been a strange past few years. I lived in Japan and Los Angeles, worked for a few companies: some evil, and others just banal. But through all of it, I haven&amp;rsquo;t felt quite like myself since I burned out back in 2019. There&amp;rsquo;s plenty to unpack about how and why that happened. The most distinct cause, I think, was my desire to prove myself amongst the people with Ivy league pedigrees and engineer parents.</description>
+    </item>
+    <item>
+      <title>001: Discarding the Batch Paradigm, Part 1</title>
+      <link>https://www.superfunc.zone/posts/001-speeding-up-c-builds/</link>
+      <pubDate>Sun, 15 Sep 2024 17:06:11 -0700</pubDate>
+      <guid>https://www.superfunc.zone/posts/001-speeding-up-c-builds/</guid>
+      <description>Introduction I remember watching demos of Common LISP&amp;rsquo;s SLIME interface ten years ago (stay with me, this is about C, I promise). It had live reloading features that just seemed magical. Smalltalk also had some incredible features for live-reloading and environment introspection. There have been countless other systems like this built over the years. The common thread is the notion of a contextually aware environment. The environment provides a persistent entity that works with you to understand, iterate on and test your program.</description>
     </item>
     <item>
       <title>000: Some Milestone History, and 3DS Emulation</title>
