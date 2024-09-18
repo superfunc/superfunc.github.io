@@ -482,27 +482,31 @@ Executed in  621.47 millis    fish           external
 </code></pre><p>We have saved another <strong>0.8 seconds</strong>, bringing us below a second to compile, and we haven&rsquo;t even
 changed any code yet, nice!</p>
 <h3 id="level-2-code-changes">Level 2: Code changes</h3>
-<p>There is a well known blog from the old
+<p>There is a well known post from the old
 <a href="https://ruby0x1.github.io/machinery_blog_archive/post/physical-design/index.html">Our Machinery blog</a>;
 it presents a maximalist view of header design in which no header includes anything but stddef/int/bool.</p>
-<p>My approach when cleaning up headers was a slight relaxation on this, so I won&rsquo;t say too much.
-I have a core header with numeric typedefs that brings in <code>stddef.h</code> and <code>stdint.h</code>.
-This allows types to use one another without needing a forward-declaration and pointer indirection.</p>
+<p>My approach when cleaning up headers was a slight relaxation on this, so I won&rsquo;t say too much.</p>
 <p>Beyond this, I applied the following set of rules</p>
+<p><strong>¬</strong> Have a core header which sets sized typedefs from <code>stddef.h</code> and <code>stdint.h</code>.</p>
 <p><strong>¬</strong>  Headers can include each other from my library, but no outside
-libraries (so no SDL, ImGui, PlaydateSDK headers show up in headers).</p>
+libraries (so no SDL, ImGui, PlaydateSDK or C standard library headers show up in headers).</p>
 <p><strong>¬</strong>  Headers should only have type declarations and function prototypes.
 Two exceptions are macros for profiling and logging.</p>
 <p><strong>¬</strong>  No templates. In my testing they simply aren&rsquo;t worth their compile time weight and error message.
 Moreover, code duplication hasn&rsquo;t ever been an actual problem for me.</p>
 <p><strong>¬</strong>  No heavy headers, in either .c or .h files. Examples: anything from the STL, &lt;stdarg.h&gt;, &lt;stdlib.h&gt;.</p>
-<p>And that&rsquo;s really it. Following these kinds of rules, builds will naturally be fast.
+<p>This allows types to use one another without needing a forward-declaration and pointer indirection.
+And that&rsquo;s really it. Following these kinds of rules, builds will naturally be fast.
 For my codebase, it resulted in a <strong>~2x</strong> improvement on top of the previous results.</p>
 <pre tabindex="0"><code>________________________________________________________
 Executed in  325.99 millis    fish           external
    usr time    5.03 secs    139.00 micros    5.03 secs
    sys time    1.89 secs     74.00 micros    1.89 secs
-</code></pre><h2 id="additional-cmake-notes">Additional CMake Notes</h2>
+</code></pre><p>When measuring your own code, the high level operation is to look at the sub trees generated
+below each module. For each with a large &ldquo;front end&rdquo; section, header cleanup is in order.
+Large &ldquo;back end&rdquo; sections imply the optimizer is taking a while to chew through the code, which
+is its own subject for a future post.</p>
+<h2 id="additional-cmake-notes">Additional CMake Notes</h2>
 <p><strong>¬</strong> CMake won&rsquo;t de-duplicate generation of particular .o files across projects, so it is worth
 bundling these into a library via <code>add_library</code> and having your executables link this in to avoid
 a significant amount of redundant work.</p>
