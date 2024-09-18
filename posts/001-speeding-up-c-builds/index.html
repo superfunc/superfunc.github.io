@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
   <link rel="preload" href="/lib/font-awesome/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" href="/lib/font-awesome/webfonts/fa-regular-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
   <link rel="preload" href="/lib/font-awesome/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin="anonymous">
@@ -8,36 +8,29 @@
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title> 001: Discarding the Batch Paradigm | used my train fare to play dodonpachi</title>
-  <link rel = 'canonical' href = 'http://localhost:1313/posts/001-speeding-up-c-builds/'>
+  <title> 001: Discarding the Batch Paradigm, Part 1 | used my train fare to play dodonpachi</title>
+  <link rel = 'canonical' href = 'https://www.superfunc.zone/posts/001-speeding-up-c-builds/'>
   
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
-  <meta property="og:url" content="http://localhost:1313/posts/001-speeding-up-c-builds/">
-  <meta property="og:site_name" content="used my train fare to play dodonpachi">
-  <meta property="og:title" content="001: Discarding the Batch Paradigm">
-  <meta property="og:description" content="Introduction ¬ Build times should be fast. Live in C&#43;&#43;land for long enough and you might forget this, but just look at languages that have prioritized compiler performance, and its clearly viable. Go, Jai and Nim are a couple examples that come to mind. Nim is particularly interesting here because its literally generating C code, giving it to a C compiler and letting it generate the binary. This illustrates that C can be very fast to compile, if configured well.">
-  <meta property="og:locale" content="en_us">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2024-09-10T17:06:11-07:00">
-    <meta property="article:modified_time" content="2024-09-10T17:06:11-07:00">
-    <meta property="article:tag" content="Perf">
-    <meta property="article:tag" content="C">
-    <meta property="article:tag" content="Workflow">
+  <meta property="og:title" content="001: Discarding the Batch Paradigm, Part 1" />
+<meta property="og:description" content="Introduction I remember watching demos of Common LISP&rsquo;s SLIME interface ten years ago (stay with me, this is about C, I promise). It had live reloading features that just seemed magical. Smalltalk also had some incredible features for live-reloading and environment introspection. There have been countless other systems like this built over the years. The common thread is the notion of a contextually aware environment. The environment provides a persistent entity that works with you to understand, iterate on and test your program." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.superfunc.zone/posts/001-speeding-up-c-builds/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-09-16T17:06:11-07:00" />
+<meta property="article:modified_time" content="2024-09-16T17:06:11-07:00" />
 
-  
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="001: Discarding the Batch Paradigm">
-  <meta name="twitter:description" content="Introduction ¬ Build times should be fast. Live in C&#43;&#43;land for long enough and you might forget this, but just look at languages that have prioritized compiler performance, and its clearly viable. Go, Jai and Nim are a couple examples that come to mind. Nim is particularly interesting here because its literally generating C code, giving it to a C compiler and letting it generate the binary. This illustrates that C can be very fast to compile, if configured well.">
+
+  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="001: Discarding the Batch Paradigm, Part 1"/>
+<meta name="twitter:description" content="Introduction I remember watching demos of Common LISP&rsquo;s SLIME interface ten years ago (stay with me, this is about C, I promise). It had live reloading features that just seemed magical. Smalltalk also had some incredible features for live-reloading and environment introspection. There have been countless other systems like this built over the years. The common thread is the notion of a contextually aware environment. The environment provides a persistent entity that works with you to understand, iterate on and test your program."/>
 
   
   
     
   
   
-  <link rel="stylesheet" href="http://localhost:1313/css/styles.9733d705d7ac29d80e7b06139ae5ba3997136170ec30eaaf256fbef0edfb700b764ff4fba80e6a04f09133f80c03a7969f593a08dae74b43b0ff4535e3c0afc5.css" integrity="sha512-lzPXBdesKdgOewYTmuW6OZcTYXDsMOqvJW&#43;&#43;8O37cAt2T/T7qA5qBPCRM/gMA6eWn1k6CNrnS0Ow/0U148CvxQ=="> 
+  <link rel="stylesheet" href="https://www.superfunc.zone/css/styles.0983574989147a5b89b6b55772a98cedded73ad1cffecffc2f1ce29a137dc359a7f354c50f9fe91368586743e15253230ca0141392afdf0575931ffe0fe6a1ad.css" integrity="sha512-CYNXSYkUeluJtrVXcqmM7d7XOtHP/s/8LxzimhN9w1mn81TFD5/pE2hYZ0PhUlMjDKAUE5Kv3wV1kx/&#43;D&#43;ahrQ=="> 
 
   
   
@@ -49,7 +42,7 @@
   
 
   
-<link rel="icon" type="image/png" href="http://localhost:1313/images/favicon.ico" />
+<link rel="icon" type="image/png" href="https://www.superfunc.zone/images/favicon.ico" />
 
   
   
@@ -80,17 +73,11 @@
       <ul>
         
         <li>
-          <a class="icon" href=" http://localhost:1313/posts/000-milestone-history/" aria-label="Previous">
+          <a class="icon" href=" https://www.superfunc.zone/posts/003-re-engaging/" aria-label="Previous">
             <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i>
           </a>
         </li>
         
-        
-        <li>
-          <a class="icon" href="http://localhost:1313/posts/002-on-contiguous-memory/" aria-label="Next">
-            <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i>
-          </a>
-        </li>
         
         <li>
           <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" aria-label="Top of Page">
@@ -118,47 +105,47 @@
   
   
   <li>
-    <a class="icon" href="http://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f" aria-label="Facebook">
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fwww.superfunc.zone%2fposts%2f001-speeding-up-c-builds%2f" aria-label="Facebook">
       <i class="fab fa-facebook " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://twitter.com/share?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&text=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Twitter">
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fwww.superfunc.zone%2fposts%2f001-speeding-up-c-builds%2f&text=001%3a%20Discarding%20the%20Batch%20Paradigm%2c%20Part%201" aria-label="Twitter">
       <i class="fab fa-twitter " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Linkedin">
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fwww.superfunc.zone%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm%2c%20Part%201" aria-label="Linkedin">
       <i class="fab fa-linkedin " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&is_video=false&description=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Pinterest">
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fwww.superfunc.zone%2fposts%2f001-speeding-up-c-builds%2f&is_video=false&description=001%3a%20Discarding%20the%20Batch%20Paradigm%2c%20Part%201" aria-label="Pinterest">
       <i class="fab fa-pinterest " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="mailto:?subject=001%3a%20Discarding%20the%20Batch%20Paradigm&body=Check out this article: http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f" aria-label="Email">
+    <a class="icon" href="mailto:?subject=001%3a%20Discarding%20the%20Batch%20Paradigm%2c%20Part%201&body=Check out this article: https%3a%2f%2fwww.superfunc.zone%2fposts%2f001-speeding-up-c-builds%2f" aria-label="Email">
       <i class="fas fa-envelope " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://getpocket.com/save?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Pocket">
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fwww.superfunc.zone%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm%2c%20Part%201" aria-label="Pocket">
       <i class="fab fa-get-pocket " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="reddit">
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fwww.superfunc.zone%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm%2c%20Part%201" aria-label="reddit">
       <i class="fab fa-reddit " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&name=001%3a%20Discarding%20the%20Batch%20Paradigm&description=Introduction%20%c2%ac%20Build%20times%20should%20be%20fast.%20Live%20in%20C%2b%2bland%20for%20long%20enough%20and%20you%20might%20forget%20this%2c%20but%20just%20look%20at%20languages%20that%20have%20prioritized%20compiler%20performance%2c%20and%20its%20clearly%20viable.%20Go%2c%20Jai%20and%20Nim%20are%20a%20couple%20examples%20that%20come%20to%20mind.%20Nim%20is%20particularly%20interesting%20here%20because%20its%20literally%20generating%20C%20code%2c%20giving%20it%20to%20a%20C%20compiler%20and%20letting%20it%20generate%20the%20binary.%20This%20illustrates%20that%20C%20can%20be%20very%20fast%20to%20compile%2c%20if%20configured%20well." aria-label="Tumblr">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fwww.superfunc.zone%2fposts%2f001-speeding-up-c-builds%2f&name=001%3a%20Discarding%20the%20Batch%20Paradigm%2c%20Part%201&description=Introduction%20I%20remember%20watching%20demos%20of%20Common%20LISP%26rsquo%3bs%20SLIME%20interface%20ten%20years%20ago%20%28stay%20with%20me%2c%20this%20is%20about%20C%2c%20I%20promise%29.%20It%20had%20live%20reloading%20features%20that%20just%20seemed%20magical.%20Smalltalk%20also%20had%20some%20incredible%20features%20for%20live-reloading%20and%20environment%20introspection.%20There%20have%20been%20countless%20other%20systems%20like%20this%20built%20over%20the%20years.%20The%20common%20thread%20is%20the%20notion%20of%20a%20contextually%20aware%20environment.%20The%20environment%20provides%20a%20persistent%20entity%20that%20works%20with%20you%20to%20understand%2c%20iterate%20on%20and%20test%20your%20program." aria-label="Tumblr">
       <i class="fab fa-tumblr " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://news.ycombinator.com/submitlink?u=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&t=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Hacker News">
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fwww.superfunc.zone%2fposts%2f001-speeding-up-c-builds%2f&t=001%3a%20Discarding%20the%20Batch%20Paradigm%2c%20Part%201" aria-label="Hacker News">
       <i class="fab fa-hacker-news " aria-hidden="true"></i>
     </a>
   </li>
@@ -169,15 +156,25 @@
     <div id="toc">
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#introduction-">Introduction ¬</a></li>
-    <li><a href="#measurement-">Measurement ¬</a>
+    <li><a href="#introduction">Introduction</a>
       <ul>
-        <li><a href="#global-compilation-stats">Global Compilation Stats</a></li>
-        <li><a href="#local-compilation-stats">Local Compilation Stats</a></li>
+        <li><a href="#pre-emptive-peanut-gallery-qa">Pre-emptive Peanut Gallery Q&amp;A</a></li>
       </ul>
     </li>
-    <li><a href="#linking">Linking</a></li>
-    <li><a href="#closing">Closing</a></li>
+    <li><a href="#measurement-">Measurement ¬</a>
+      <ul>
+        <li><a href="#setup">Setup</a></li>
+        <li><a href="#level-1-build-system-changes">Level 1: Build system changes</a></li>
+        <li><a href="#level-2-code-changes">Level 2: Code changes</a></li>
+      </ul>
+    </li>
+    <li><a href="#additional-cmake-notes">Additional CMake Notes</a></li>
+    <li><a href="#toolchain-notes">Toolchain Notes</a></li>
+    <li><a href="#closing">Closing</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
   </ul>
 </nav>
     </div>
@@ -189,13 +186,13 @@
   <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
     <header>
       <h1 class="posttitle" itemprop="name headline">
-        001: Discarding the Batch Paradigm
+        001: Discarding the Batch Paradigm, Part 1
       </h1>
       <div class="meta">
         
         <div class="postdate">
           
-          <time datetime="2024-09-10 17:06:11 -0700 PDT" itemprop="datePublished">2024-09-10</time>
+          <time datetime="2024-09-16 17:06:11 -0700 PDT" itemprop="datePublished">2024-09-16</time>
           
         </div>
         
@@ -222,53 +219,314 @@
   
     
     <div class="content" itemprop="articleBody">
-      <h2 id="introduction-">Introduction ¬</h2>
-<p>Build times should be fast. Live in C++land for long enough and you might
-forget this, but just look at languages that have prioritized compiler performance, and its clearly viable.
-Go, Jai and Nim are a couple examples that come to mind.
-Nim is particularly interesting here because its literally generating
-C code, giving it to a C compiler and letting it generate the binary.
-This illustrates that C can be very fast to compile, if configured
-well.</p>
-<p>I work across a few operating systems, so I use CMake, Ninja and Clang.
-If you are primarily using Windows and Visual Studio, I
-highly recommend checking out <a href="https://blog.s-schoener.com/2023-08-17-compile-score/">Sebastian Shöner</a>&rsquo;s excellent blog post on this.</p>
-<p>I took to speeding up build times in my personal engine
-I use for making games, I&rsquo;ll use this as an example throughout.</p>
+      <h2 id="introduction">Introduction</h2>
+<p>I remember watching <a href="https://www.youtube.com/watch?v=6pMyhrDcMzw">demos</a>
+of Common LISP&rsquo;s SLIME interface ten years ago (stay with me,
+this is about C, I promise). It had live reloading features that just
+seemed magical. Smalltalk also had some incredible features for live-reloading
+and <a href="https://www.youtube.com/watch?v=baxtyeFVn3w">environment introspection</a>.
+There have been countless other systems like this built <a href="https://github.com/bhauman/lein-figwheel">over</a>
+the years. The common thread is the notion of a contextually aware environment.
+The environment provides a persistent entity that works with you to
+understand, iterate on and test your program.</p>
+<p>For various reasons, this more iterative style of development has not become
+the norm. The batch paradigm, with it&rsquo;s lineage going all the way back to punch cards,
+remains dominant. This is especially true in the world of C and C++. One primary reason for this, in my view, is
+the state of compile times in most projects. Sometimes, when things are bad for so long,
+people begin to believe that there
+exists an <em>intrinsic</em> quality which necessitates the status quo. This is how things
+feel if you look around the C and C++ worlds. If we take a step back to examine
+this more quantitatively, we can quickly determine that this is not an inevitable
+conclusion.</p>
+<div id="container">
+<img src="/001/clowns.png" float="left" align="left" alt="">
+<div id="text">
+Sadly, before we can think about live-coding, contextually-aware-environments, and all that fun stuff, we need
+to get the clowns out of the car. This brings us to the focus of this post: speeding up builds using common,
+robust toolchains. I'll be using my personal engine, EVAC <sup>1</sup>, as an example.
+</div>
+</div>
+<h3 id="pre-emptive-peanut-gallery-qa">Pre-emptive Peanut Gallery Q&amp;A</h3>
+<p><em>Maybe computers just aren&rsquo;t fast enough yet?</em></p>
+<table><tr> <td>
+No. Computers are incredibly fast, to a degree we often lose grasp of. There is no good reason
+builds should be taking multiple minutes. Video games are computing physics simulations, 
+rendering models & textures, processing and mixing audio -- often every 16 milliseconds. We can
+process some text, evaluate it, and output an executable.
+</td> </tr> </table>
+<p><em>Maybe it is inherent to compiled languages?</em></p>
+<table><tr> <td>
+No. There are plenty of existence proofs of natively compiled languages with excellent build
+performance: Nim, Jai, and Go come to mind.
+</td> </tr> </table>
+<p><em>Maybe it is inherent to C or C++?</em></p>
+<table><tr> <td>
+No. With careful, informed setup, C and C++ can compile very quickly.
+</td> </tr> </table>
+<p><em>Is this using some esoteric compiler/toolchain that will become abandonware?</em></p>
+<table><tr> <td>
+ No. First, I'm not releasing any code in this post, so there is nothing to abandon.
+Second, the techniques and results shown will be done with Clang, CMake and Ninja; 
+these three are probably the most popular compiler, and build tools in use on non Windows
+platforms (though they are usable on Windows, and I recommend moving off of MSVC if possible).
+If you are primarily using Windows and Visual Studio, then I highly recommend checking out 
+<a href="https://blog.s-schoener.com/2023-08-17-compile-score/">
+Sebastian Shöner's excellent blog post on this.</a> 
+</td> </tr> </table>
+<p><em>This build is already pretty fast, it won&rsquo;t apply to my special repo!</em></p>
+<table><tr> <td>
+The important takeaways here are the actions you can take, and speed numbers
+should be considered in relative terms, not absolute.
+</td> </tr> </table>
 <h2 id="measurement-">Measurement ¬</h2>
-<p>Just like any performance problem, our intuition can quickly lead
-us in the wrong direction, so it&rsquo;s important we measure things. There are
-two broad steps I use to measure build times.</p>
-<h3 id="global-compilation-stats">Global Compilation Stats</h3>
-<p>On a clean build directory, I run the build as usual:</p>
-<pre tabindex="0"><code>cd build
-cmake -GNinja -DCMAKE_BUILD_TYPE=RelWithDbgInfo ..
+<p>Just like any performance evaluation, our intuition can quickly lead
+us in the wrong direction, so it&rsquo;s important we measure things and let that guide our process.</p>
+<h3 id="setup">Setup</h3>
+<p>There are two primary tools we will utilize for our measurements.</p>
+<p><strong>¬</strong> A python script made by a Github user named Nico, available <a href="https://github.com/nico/ninjatracing">here</a>.</p>
+<p><strong>¬</strong> The web site <a href="https://ui.perfetto.dev/">https://ui.perfetto.dev/</a> (you can also use chrome&rsquo;s <code>chrome://tracing</code>).</p>
+<p>Additionally, we must update our CMake configuration to output the necessary metadata via
+<a href="https://aras-p.info/blog/2019/01/16/time-trace-timeline-flame-chart-profiler-for-Clang/">Aras&rsquo;</a>
+wonderful <code>-ftime-trace</code> argument which outputs a <code>.json</code> file next to each
+compilation unit generated:</p>
+<pre tabindex="0"><code>add_compile_options(-ftime-trace)                                                                            
+</code></pre><p>I have an additional python script we will use in a bit:</p>
+<pre tabindex="0"><code># sort_profile_data.py
+import os, json, sys, pprint                                                                                 
+                                                                                                             
+assert(len(sys.argv) == 2)                                                                                   
+                                                                                                             
+path = sys.argv[1]                                                                                           
+                                                                                                             
+with open(path, &#39;r&#39;) as handle:                                                                              
+    ordered = list(reversed(sorted(json.loads(handle.read()),                                                
+                                   key=lambda o: o[&#39;dur&#39;])))                                                 
+    pruned = []                                                                                              
+    index = 0                                                                                                
+    for i in range(0, len(ordered)):                                                                         
+        # grab top level categories only                                                                     
+        ordered[i][&#39;tid&#39;] = index                                                                            
+        ordered[i][&#39;ts&#39;] = 0                                                                                 
+        index = index + 1                                                                                    
+        pruned.append(ordered[i])                                                                            
+                                                                                                             
+    print(json.dumps(pruned))    
+</code></pre><p>Before measuring a build, we need to make sure there are no remnants left in
+an existing build directory. Ninjatracing, by default,
+will just take the last run, even if its incremental.</p>
+<pre tabindex="0"><code>ninja clean
+rm .ninja_log
+</code></pre><p>Then run the build as usual (ensure we are using clang and ninja here)</p>
+<pre tabindex="0"><code>cmake -GNinja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ ..
 ninja
-</code></pre><p>Once the build has completed we can use a handy tool called <a href="https://github.com/nico/ninjatracing">ninjatracing</a> which consumes the generated <code>.ninja_log</code> file and generates JSON consumable by Chrome&rsquo;s built in tracing (chrome://tracing) or <a href="https://ui.perfetto.dev">perfetto</a>.</p>
-<p><img src="/workflow/global_perf.png" alt=""></p>
-<p>At a quick glance in the first column (we focus our efforts here first, as the latter columns are doing final global steps like linking, more on that later), we can notice one particularly long compilation unit (in the thread 1 row), in sprintf.c. This is pulling in <a href="https://github.com/nothings/stb/blob/master/stb_sprintf.h">STB&rsquo;s sprintf implementation</a>. Moving to the next type of profiling, we can examine why this particular file is taking
-a long time.</p>
-<p><img src="/workflow/problem_file.png" alt=""></p>
-<h3 id="local-compilation-stats">Local Compilation Stats</h3>
-<p>Once we have a problem unit to hone in on, we can
-use <a href="https://aras-p.info/blog/2019/01/16/time-trace-timeline-flame-chart-profiler-for-Clang/">Aras&rsquo; wonderful contribution to clang, -ftime-trace</a>. To enable this in cmake we simply need to add the following
-to our CMakeLists.txt.</p>
-<pre tabindex="0"><code>add_compile_options(-ftime-trace)
-</code></pre><p>From this we will get a json file output for each <code>.o</code> file generated in the build process.
-Once we run the build, we can examine our known problem file.</p>
-<h4 id="frontend-slowness">Frontend slowness</h4>
-<h4 id="backend-slowness">Backend slowness</h4>
-<h2 id="linking">Linking</h2>
-<p>For linking I have one recommendation for *nix users, use <a href="https://github.com/rui314/mold">Mold</a>. If possible, please throw some financial support the developers way. It is a massive
-leap over Gold, Ld, and Lld in terms of performance. How Epic or any of the other money printers
-with tools full of a butt ton of DLLs hasn&rsquo;t paid Rui to integrate Windows support is beyond me.</p>
+</code></pre><p>Next we can use the <code>ninjatracing</code> script to process the output <code>.ninja_log</code> file.
+By default, the build will output just the top level modules. This is a good place to start
+and get a lay of the land.</p>
+<pre tabindex="0"><code>python3 ninjatracing.py .ninja_log &gt; top_level.json
+</code></pre><h3 id="level-1-build-system-changes">Level 1: Build system changes</h3>
+<p>Let&rsquo;s examine the output at the start. <strong>5.46 seconds</strong>, certainly not horrible<sup>2</sup>,
+but not what it should be,
+particularly if our long term goal is a build fast enough to re-compile on keystrokes,
+à la <a href="https://www.youtube.com/watch?v=72y2EC5fkcE">Tomorrow Corporation</a>.
+This first set of optimizations will be done at the CMake level, the next set
+will be edits on the code itself. Moreover, it is important to consider the improvements
+in relative terms, as the lessons here will scale to larger problems.</p>
+<pre tabindex="0"><code>$ time ninja                                                                 
+________________________________________________________
+Executed in    5.46 secs    fish           external
+   usr time   57.30 secs    0.00 micros   57.30 secs
+   sys time    8.05 secs  251.00 micros    8.05 secs
+</code></pre><p>Lets run the ninjatracing script and see what our top level has to show us.</p>
+<p><img src="/001/graph_001.png" alt=""></p>
+<p>Something that quickly jumps out here is our usage of <code>yyjson</code>. While I think this library
+does a good job and is the best C (not C++) library available, its compile time is wholly
+disproportionate compared to the computational task it provides.
+This brings about a useful flowchart for approaching optimization in a build
+context at a top level.</p>
+<pre tabindex="0"><code>                              ┌──────────────────────────┐                           
+                              │                          │                           
+                              │ Do I actually need this? │                           
+                              │                          │                           
+                              └┬─────────────────────────┘                           
+                               │                                                     
+                               │                                                     
+                               │                                                     
+                               │                                                     
+                               │                                                     
+                               │                                                     
+┌──────────────┐               │            ┌────────────────────────────┐           
+│ Delete it :) │  ◄─────No─────┴────Yes───► │ Is it frequently changing? │           
+└──────────────┘                            └┬───────────────────────────┘           
+                                             │                                       
+                                             │                                       
+                                             │                                       
+                                             │                                       
+                                             │                                       
+                                             │                                       
+                                             │              ┌───────────────────────┐
+                   ┌─────────┐               │              │                       │
+                   │ Bake it │ ◄─────No──────┴────Yes─────► │ Level 2 Optimizations │
+                   └─────────┘                              │   See next section    │
+                                                            │                       │
+                                                            └───────────────────────┘
+</code></pre><p>In the case of <code>yyjson</code>, it is never changing. It is a vendored dependency. So we can
+certainly bake it. Given we know the set of platforms and architectures we support, doing
+so is simple. Go grab the .o generated in the build and build an archive with it <code>ar r yyjson.a yyjson.o</code>, and
+save that per platform somewhere in your repository. Once you&rsquo;ve checked these archives into
+the repository, you can remove the .c from your build sources.</p>
+<p>Then we can make a cmake macro (note you can do this as dynamic libs as well):</p>
+<pre tabindex="0"><code>macro(_evac_baked_lib bin_name lib_name id ext)
+  add_library(${lib_name} STATIC IMPORTED)
+  if(evac_host_platform_linux)
+    set_target_properties(${lib_name} PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/ext/${id}/linux/${id}.${ext})
+  elseif(evac_host_platform_macos)
+    set_target_properties(${lib_name} PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/ext/${id}/macos/${id}.${ext})
+  elseif(evac_host_platform_windows)
+    set_target_properties(${lib_name} PROPERTIES IMPORTED_LOCATION ${CMAKE_CURRENT_SOURCE_DIR}/ext/${id}/windows/${id}.${ext})
+  endif()
+
+  target_link_libraries(${bin_name} PRIVATE ${lib_name})
+endmacro()
+</code></pre><p>And the usage code looks like:</p>
+<pre tabindex="0"><code>_evac_baked_lib(evac_pc yyjson_pc yyjson a)
+</code></pre><p>The resulting build run?</p>
+<pre tabindex="0"><code>________________________________________________________
+Executed in    3.53 secs    fish           external
+   usr time   51.07 secs    0.00 micros   51.07 secs
+   sys time    7.77 secs  273.00 micros    7.77 secs
+</code></pre><p>Not bad! A simple change nets us almost <strong>2 seconds</strong> for no real effort. Not all wins will be
+this easy, of course. The more important part here is how valuable having the data is to guiding
+our process. Once we had a visualization, we could immediately see the issue.</p>
+<p>With a tall nail out of the way, we can use the sorting script I provided to examine the state
+of things. This (ab)uses the structure of the json format, giving each top level module an incrementing
+thread id based on their duration, starting at time 0, so we can view an aligned, ordered list of problems
+with the highest magnitude at the top.</p>
+<p><img src="/001/graph_002.png" alt=""></p>
+<p>This brings out the second easy win that is common in many builds. Libraries that are available at the
+system level, like SDL2 (which also recommends dynamically linking <a href="https://wiki.libsdl.org/SDL2/README/dynapi)">https://wiki.libsdl.org/SDL2/README/dynapi)</a>,
+can be grabbed as dynamic libraries via your local package manager. It is nice to have the option to statically
+link for certain platforms, but it generally shouldnt be the default for these kind of things, particularly
+for day to day developer workflow. Below is the cmake code for my usage of SDL2, <code>evac_pc</code> is the core
+engine library which games pull in. This behavior gets exposed through a flag provided to
+cmake <code>EVAC_USE_SYSTEM_SDL2</code>, I find this is useful for retaining the option to statically
+link easily from a local/vendored build.</p>
+<pre tabindex="0"><code>if (_evac_dynlink_sdl2)
+  message(STATUS, &#34; [%%] Dynamically linking SDL2 for EVAC&#34;)
+  if (evac_host_platform_linux)
+    target_link_libraries(evac_pc 
+                          PRIVATE SDL2::SDL2 
+                                  SDL2_ttf
+                                  SDL2_mixer 
+                                  SDL2_image)
+  else()
+    target_link_libraries(evac_pc 
+                          PRIVATE SDL2::SDL2 
+                                  SDL2_ttf::SDL2_ttf
+                                  SDL2_mixer::SDL2_mixer
+                                  SDL2_image::SDL2_image)
+  endif()
+else()
+  message(STATUS, &#34; [%%] Statically linking SDL2 for EVAC&#34;)
+  target_link_libraries(evac_pc
+                        PRIVATE SDL2::SDL2-static 
+                                SDL2_ttf::SDL2_ttf-static
+                                SDL2_mixer::SDL2_mixer-static 
+                                SDL2_image::SDL2_image-static)
+endif()
+</code></pre><p>This of course nets us a large win, we are doing much less stuff! While it is a bit obvious, its
+important to point out. I often see a large preference for static linking, and while I get it, it is
+important to consider the difference between deployed needs of software and development needs, they
+can be different and we can have both optimized for their uses.</p>
+<pre tabindex="0"><code>$ cmake -DCMAKE_BUILD_TYPE=Debug -DEVAC_TRACE_BUILD_TIME=ON -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DEVAC_USE_SYSTEM_SDL2=ON -GNinja ..
+
+$ time ninja           
+________________________________________________________
+Executed in    2.13 secs    fish           external
+   usr time   11.28 secs    0.00 micros   11.28 secs
+   sys time    2.62 secs  275.00 micros    2.62 secs
+</code></pre><p>That nets us another <strong>~1.5</strong> seconds, again for very little work and no perceivable change to our
+workflow. Back to the data we go:</p>
+<p><img src="/001/graph_003.png" alt=""></p>
+<p>This leads us to the same conclusion we had for <code>yyjson</code>. I won&rsquo;t be spending time changing ImGui,
+its great, it doesn&rsquo;t need my help :). So we bake it, it saves us another <strong>0.8s</strong>. We find a similar win with
+<a href="https://github.com/nothings/stb/blob/master/stb_sprintf.h">STB/sprintf</a>.</p>
+<h4 id="a-surprise-detour">A surprise detour</h4>
+<p>Now that we have tamed our dependencies<sup>3</sup>, we can focus on speeding up the build of <em>our</em> code. Right?
+For this, we will run ninja tracing, but this time with different arguments. This embeds the information from
+<code>-ftime-trace</code> below our top level modules, giving us a fuller picture. Before we look at those, we notice one
+last</p>
+<pre tabindex="0"><code>python3 ninjatracing.py -e -g 500 .ninja_log &gt; expanded.json 
+</code></pre><p><img src="/001/graph_004.png" alt=""></p>
+<p>The end of the timeline shows one long and one extremely long bars (the pink and purple). At first I
+thought they were running into some degenerate situation for the linker. So I ran it under <code>perf</code>.</p>
+<p><img src="/001/profile.png" alt=""></p>
+<p><code>pdc</code> is the Playdate SDK&rsquo;s tool which converts assets to their on-device formats. When looking at the pink
+and purple bars (representing two games I&rsquo;m working on), I noticed that the time seemed to scale linearly
+with the number of assets in the project. Sure enough, the <code>pdc</code> tool was scanning every file in those
+directories and opening all of the media. Not a great strategy. So I replaced this with my own file watcher that
+lives outside of the compiler/build system and just updates assets on the infrequent occasion they change.
+This brings about an important performance lesson: <em>consider the common case</em>. It also reminds us that we
+need to vet any build tooling brought in, their .cmake scripts activate <code>pdc</code>, so I wasn&rsquo;t aware until
+seeing this profile.</p>
+<p>After removing this additional command:</p>
+<pre tabindex="0"><code>________________________________________________________
+Executed in  621.47 millis    fish           external
+   usr time    5.86 secs    128.00 micros    5.86 secs
+   sys time    2.06 secs     77.00 micros    2.06 secs
+</code></pre><p>We have saved another <strong>0.8 seconds</strong>, bringing us below a second to compile, and we haven&rsquo;t even
+changed any code yet, nice!</p>
+<h3 id="level-2-code-changes">Level 2: Code changes</h3>
+<p>There is a well known blog from the old
+<a href="https://ruby0x1.github.io/machinery_blog_archive/post/physical-design/index.html">Our Machinery blog</a>;
+it presents a maximalist view of header design in which no header includes anything but stddef/int/bool.</p>
+<p>My approach when cleaning up headers was a slight relaxation on this, so I won&rsquo;t say too much.
+I have a core header with numeric typedefs that brings in <code>stddef.h</code> and <code>stdint.h</code>.
+This allows types to use one another without needing a forward-declaration and pointer indirection.</p>
+<p>Beyond this, I applied the following set of rules</p>
+<p><strong>¬</strong>  Headers can include each other from my library, but no outside
+libraries (so no SDL, ImGui, PlaydateSDK headers show up in headers).</p>
+<p><strong>¬</strong>  Headers should only have type declarations and function prototypes.
+Two exceptions are macros for profiling and logging.</p>
+<p><strong>¬</strong>  No templates. In my testing they simply aren&rsquo;t worth their compile time weight and error message.
+Moreover, code duplication hasn&rsquo;t ever been an actual problem for me.</p>
+<p><strong>¬</strong>  No heavy headers, in either .c or .h files. Examples: anything from the STL, &lt;stdarg.h&gt;, &lt;stdlib.h&gt;.</p>
+<p>And that&rsquo;s really it. Following these kinds of rules, builds will naturally be fast.
+For my codebase, it resulted in a <strong>~2x</strong> improvement on top of the previous results.</p>
+<pre tabindex="0"><code>________________________________________________________
+Executed in  325.99 millis    fish           external
+   usr time    5.03 secs    139.00 micros    5.03 secs
+   sys time    1.89 secs     74.00 micros    1.89 secs
+</code></pre><h2 id="additional-cmake-notes">Additional CMake Notes</h2>
+<p><strong>¬</strong> CMake won&rsquo;t de-duplicate generation of particular .o files across projects, so it is worth
+bundling these into a library via <code>add_library</code> and having your executables link this in to avoid
+a significant amount of redundant work.</p>
+<h2 id="toolchain-notes">Toolchain Notes</h2>
+<p><strong>¬</strong> Make is significantly slower than ninja in my testing. Visual Studio&rsquo;s solution is as well. Ninja has
+by far the fastest change detection and pruning for telling the underlying compiler what to build.</p>
+<p><strong>¬</strong> For compilers, clang is the only one I will bother with these days. Microsoft treats MSVC like a neglected
+hobby project (<a href="https://en.cppreference.com/w/c/compiler_support/23)">https://en.cppreference.com/w/c/compiler_support/23)</a>, particularly if you use C moreso than
+C++. Moreover, the error coverage is laughable compared to clang, its genuinely just not worth the time
+now that clang works across platforms (unless you need MSVC for things like targeting Xbox, of course).</p>
+<p><strong>¬</strong> For linking I have one recommendation for *nix users, use <a href="https://github.com/rui314/mold">Mold</a>.
+Once build times are under control, linking becomes even more important. In incremental rebuilds (the common
+case), linking takes up a much larger share of the time. Also, if possible, please throw some financial support
+the developers way. It is a massive leap over Gold, Ld, and Lld in terms of performance. How Epic or any of
+the other money printers with tools comprised of a butt ton of DLLs hasn&rsquo;t paid Rui to finish Windows support is beyond me.</p>
 <h2 id="closing">Closing</h2>
 <p>With some careful planning and consideration, build times can be very fast.</p>
-<ol>
-<li>Measure it, automate that measurement <a href="https://github.com/marketplace/actions/continuous-benchmark">example gh action</a></li>
-<li>Keep your headers free of superfluous and heavy includes.</li>
-<li>Bake build items that are rarely changing.</li>
-</ol>
+<p><strong>¬</strong> Measure it, then automate that measurement (<a href="https://github.com/marketplace/actions/continuous-benchmark">example</a>)</p>
+<p><strong>¬</strong> Keep your headers free of superfluous and heavy includes.</p>
+<p><strong>¬</strong> Ensure things running in the build actually need to be part of the build.</p>
+<p><strong>¬</strong> Bake heavy build items that are rarely changing.</p>
+<p><strong>¬</strong> Use system packages for commonly distributed libraries, at least for dev workflow.</p>
+<p>With the clowns out of the car, we can look into what our newfound agility enables. Next time :)</p>
+<p><img src="/001/preview.gif" alt=""></p>
+<hr>
+<h4 id="footnotes">Footnotes</h4>
+<p>1: An homage to the prolific shmup developers, <a href="https://www.cave.co.jp/en/company/history/">CAVE</a></p>
+<p>2: I&rsquo;ve seen 3+ hour clean builds in my career, so trust me, it can get <em>much</em> worse.</p>
+<p>3: An implied part of Level 1 is to very carefully select dependencies, use few, and run from anything with &ldquo;Modern C++&rdquo; in the readme)</p>
+<p>4: I&rsquo;ll try to expand on this point in the next post, covering a fork I made for a popular hot reloading library.</p>
 
     </div>
   </article>
@@ -300,15 +558,25 @@ with tools full of a butt ton of DLLs hasn&rsquo;t paid Rui to integrate Windows
     <div id="toc-footer" style="display: none">
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#introduction-">Introduction ¬</a></li>
-    <li><a href="#measurement-">Measurement ¬</a>
+    <li><a href="#introduction">Introduction</a>
       <ul>
-        <li><a href="#global-compilation-stats">Global Compilation Stats</a></li>
-        <li><a href="#local-compilation-stats">Local Compilation Stats</a></li>
+        <li><a href="#pre-emptive-peanut-gallery-qa">Pre-emptive Peanut Gallery Q&amp;A</a></li>
       </ul>
     </li>
-    <li><a href="#linking">Linking</a></li>
-    <li><a href="#closing">Closing</a></li>
+    <li><a href="#measurement-">Measurement ¬</a>
+      <ul>
+        <li><a href="#setup">Setup</a></li>
+        <li><a href="#level-1-build-system-changes">Level 1: Build system changes</a></li>
+        <li><a href="#level-2-code-changes">Level 2: Code changes</a></li>
+      </ul>
+    </li>
+    <li><a href="#additional-cmake-notes">Additional CMake Notes</a></li>
+    <li><a href="#toolchain-notes">Toolchain Notes</a></li>
+    <li><a href="#closing">Closing</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
   </ul>
 </nav>
     </div>
@@ -323,47 +591,47 @@ with tools full of a butt ton of DLLs hasn&rsquo;t paid Rui to integrate Windows
   
   
   <li>
-    <a class="icon" href="http://www.facebook.com/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f" aria-label="Facebook">
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fwww.superfunc.zone%2fposts%2f001-speeding-up-c-builds%2f" aria-label="Facebook">
       <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://twitter.com/share?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&text=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Twitter">
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fwww.superfunc.zone%2fposts%2f001-speeding-up-c-builds%2f&text=001%3a%20Discarding%20the%20Batch%20Paradigm%2c%20Part%201" aria-label="Twitter">
       <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.linkedin.com/shareArticle?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Linkedin">
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fwww.superfunc.zone%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm%2c%20Part%201" aria-label="Linkedin">
       <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&is_video=false&description=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Pinterest">
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fwww.superfunc.zone%2fposts%2f001-speeding-up-c-builds%2f&is_video=false&description=001%3a%20Discarding%20the%20Batch%20Paradigm%2c%20Part%201" aria-label="Pinterest">
       <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="mailto:?subject=001%3a%20Discarding%20the%20Batch%20Paradigm&body=Check out this article: http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f" aria-label="Email">
+    <a class="icon" href="mailto:?subject=001%3a%20Discarding%20the%20Batch%20Paradigm%2c%20Part%201&body=Check out this article: https%3a%2f%2fwww.superfunc.zone%2fposts%2f001-speeding-up-c-builds%2f" aria-label="Email">
       <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://getpocket.com/save?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Pocket">
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fwww.superfunc.zone%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm%2c%20Part%201" aria-label="Pocket">
       <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="reddit">
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fwww.superfunc.zone%2fposts%2f001-speeding-up-c-builds%2f&title=001%3a%20Discarding%20the%20Batch%20Paradigm%2c%20Part%201" aria-label="reddit">
       <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&name=001%3a%20Discarding%20the%20Batch%20Paradigm&description=Introduction%20%c2%ac%20Build%20times%20should%20be%20fast.%20Live%20in%20C%2b%2bland%20for%20long%20enough%20and%20you%20might%20forget%20this%2c%20but%20just%20look%20at%20languages%20that%20have%20prioritized%20compiler%20performance%2c%20and%20its%20clearly%20viable.%20Go%2c%20Jai%20and%20Nim%20are%20a%20couple%20examples%20that%20come%20to%20mind.%20Nim%20is%20particularly%20interesting%20here%20because%20its%20literally%20generating%20C%20code%2c%20giving%20it%20to%20a%20C%20compiler%20and%20letting%20it%20generate%20the%20binary.%20This%20illustrates%20that%20C%20can%20be%20very%20fast%20to%20compile%2c%20if%20configured%20well." aria-label="Tumblr">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fwww.superfunc.zone%2fposts%2f001-speeding-up-c-builds%2f&name=001%3a%20Discarding%20the%20Batch%20Paradigm%2c%20Part%201&description=Introduction%20I%20remember%20watching%20demos%20of%20Common%20LISP%26rsquo%3bs%20SLIME%20interface%20ten%20years%20ago%20%28stay%20with%20me%2c%20this%20is%20about%20C%2c%20I%20promise%29.%20It%20had%20live%20reloading%20features%20that%20just%20seemed%20magical.%20Smalltalk%20also%20had%20some%20incredible%20features%20for%20live-reloading%20and%20environment%20introspection.%20There%20have%20been%20countless%20other%20systems%20like%20this%20built%20over%20the%20years.%20The%20common%20thread%20is%20the%20notion%20of%20a%20contextually%20aware%20environment.%20The%20environment%20provides%20a%20persistent%20entity%20that%20works%20with%20you%20to%20understand%2c%20iterate%20on%20and%20test%20your%20program." aria-label="Tumblr">
       <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://news.ycombinator.com/submitlink?u=http%3a%2f%2flocalhost%3a1313%2fposts%2f001-speeding-up-c-builds%2f&t=001%3a%20Discarding%20the%20Batch%20Paradigm" aria-label="Hacker News">
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fwww.superfunc.zone%2fposts%2f001-speeding-up-c-builds%2f&t=001%3a%20Discarding%20the%20Batch%20Paradigm%2c%20Part%201" aria-label="Hacker News">
       <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
     </a>
   </li>

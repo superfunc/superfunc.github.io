@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Workflow on used my train fare to play dodonpachi</title>
-    <link>http://localhost:1313/tags/workflow/</link>
-    <description>Recent content in Workflow on used my train fare to play dodonpachi</description>
-    <generator>Hugo</generator>
+    <title>workflow on used my train fare to play dodonpachi</title>
+    <link>https://www.superfunc.zone/tags/workflow/</link>
+    <description>Recent content in workflow on used my train fare to play dodonpachi</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Yoyogi Games LLC</copyright>
-    <lastBuildDate>Tue, 10 Sep 2024 17:06:11 -0700</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/workflow/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 16 Sep 2024 17:06:11 -0700</lastBuildDate>
+    <atom:link href="https://www.superfunc.zone/tags/workflow/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>001: Discarding the Batch Paradigm</title>
-      <link>http://localhost:1313/posts/001-speeding-up-c-builds/</link>
-      <pubDate>Tue, 10 Sep 2024 17:06:11 -0700</pubDate>
-      <guid>http://localhost:1313/posts/001-speeding-up-c-builds/</guid>
-      <description>Introduction ¬ Build times should be fast. Live in C++land for long enough and you might forget this, but just look at languages that have prioritized compiler performance, and its clearly viable. Go, Jai and Nim are a couple examples that come to mind. Nim is particularly interesting here because its literally generating C code, giving it to a C compiler and letting it generate the binary. This illustrates that C can be very fast to compile, if configured well.</description>
+      <title>001: Discarding the Batch Paradigm, Part 1</title>
+      <link>https://www.superfunc.zone/posts/001-speeding-up-c-builds/</link>
+      <pubDate>Mon, 16 Sep 2024 17:06:11 -0700</pubDate>
+      <guid>https://www.superfunc.zone/posts/001-speeding-up-c-builds/</guid>
+      <description>Introduction I remember watching demos of Common LISP&amp;rsquo;s SLIME interface ten years ago (stay with me, this is about C, I promise). It had live reloading features that just seemed magical. Smalltalk also had some incredible features for live-reloading and environment introspection. There have been countless other systems like this built over the years. The common thread is the notion of a contextually aware environment. The environment provides a persistent entity that works with you to understand, iterate on and test your program.</description>
     </item>
   </channel>
 </rss>
