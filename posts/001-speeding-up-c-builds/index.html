@@ -440,7 +440,8 @@ else()
                                 SDL2_image::SDL2_image-static)
 endif()
 </code></pre><p>This of course nets us a large win, we are doing much less stuff! While it is a bit obvious, its
-important to point out. I often see a large preference for static linking, and while I get it, it is
+important to point out. I often see a large preference for static linking locally vendored source,
+and while I get it, it is
 important to consider the difference between deployed needs of software and development needs, they
 can be different and we can have both optimized for their uses.</p>
 <pre tabindex="0"><code>$ cmake -DCMAKE_BUILD_TYPE=Debug -DEVAC_TRACE_BUILD_TIME=ON -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DEVAC_USE_SYSTEM_SDL2=ON -GNinja ..
