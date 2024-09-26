@@ -37,5 +37,12 @@
       <guid>https://www.superfunc.zone/about/</guid>
       <description>I&amp;rsquo;m Josh. I&amp;rsquo;m a programmer and game designer.&#xA;I worked in animated films for a long while: primarily on a file format called USD and pipeline&amp;rsquo;s surrounding it at Disney Animation, Pixar and Netflix. After that I spent some time in tech at NVIDIA working on Omniverse and AAA engine things at That&amp;rsquo;s No Moon.&#xA;In 2023 I founded Yoyogi Games to focus on building the kinds of games I like, video game ass video games.</description>
     </item>
+    <item>
+      <title>Works</title>
+      <link>https://www.superfunc.zone/works/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://www.superfunc.zone/works/</guid>
+      <description>Upcoming Tib&amp;rsquo;s Revenge A rhythm/puzzle hybrid micro game, which tells the story of my early programming years, coming to Playdate, late 2024. Between Temples A top down boss rush game, coming to Playdate, mid 2025. Waku Waku A horizontal bullethell shmup with a vastly expanded set of modes and difficulties compared to Gun Trails, coming late 2024 / early 2025 Gun Trails HD A re-imagining of Gun Trails for modern consoles and PC, coming late 2025 Completed Gun Trails A bullethell shmup made for the Playdate.</description>
+    </item>
   </channel>
 </rss>
